@@ -10,9 +10,15 @@
     
         </section>
         <section class="task-bar">
-            <button @click="saveTodo" class="save-todo">保存</button>
+            <!-- <button @click="saveTodo" class="save-todo">保存</button> -->
+            <div class="task-bar-btns">
+                <Button @click="saveTodo"  icon="checkmark-circled" >保存</Button>
+                <Button @click="removeFinishedTodo" icon="trash-a" >清理所有已完成</Button>
+            </div>
             <div class="task-state-sort">
-
+                <Select v-model="sortSelector" style="width:200px">
+                    <Option v-for="item in sortList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                </Select>
             </div>
         </section>
         <section class="task-list">
@@ -60,7 +66,12 @@ export default {
                 createdAt: "123",
                 done: true,
                 todoType: "eme"
-            }]
+            }],
+            sortList: [{
+                value: 'createdTime',
+                label: '创建时间'
+            }],
+            sortSelector:""
         }
     },
     created: function () {
@@ -81,7 +92,9 @@ export default {
                     done: false
                 })
                 this.newTodo = ""
+                this.saveTodo()
             }
+            
         },
         removeTodo: function (todo) {
             let index = this.todoList.indexOf(todo)
@@ -89,14 +102,17 @@ export default {
             // delete "1" element from index to end 
         },
         saveTodo: function () {
-            let dataString = JSON.stringify(this.todoList)
+            let self = this
+            let dataString = JSON.stringify(self.todoList)
             window.localStorage.setItem('myTodos', dataString)
+        },
+        removeFinishedTodo:function(){
+            this.todoList = this.todoList.filter(function(elem){
+                return !elem.done 
+            })
         }
     },
     computed: {
-        sortList: function () {
-
-        }
     },
     filters: {
         formateDate: function (value) {
@@ -116,6 +132,8 @@ export default {
 .todo-list {
     color: #2A363B;
 }
+
+
 
 
 /* new-todo input */
@@ -175,19 +193,25 @@ export default {
 }
 
 
+
+
 /* todo-action-bar */
 
 .task-bar {
     margin-top: 16px;
     display: flex;
     justify-content: space-between;
-    button{
-        padding:8px 8px;
-        text-decoration: none;
-        outline: none;
-        cursor: pointer;
-    }
+    font-size: 16px;
+    // span{font-size: 16px;}
+    // button {
+    //     padding: 8px 8px;
+    //     text-decoration: none;
+    //     outline: none;
+    //     cursor: pointer;
+    // }
 }
+
+
 
 
 /* todo-list */
@@ -226,7 +250,7 @@ export default {
         }
         &.finished {
             .task-info {
-                transform: translateX(-5em);
+                transform: translateX(-4em);
             }
             .task-content {
                 label {
@@ -262,6 +286,7 @@ export default {
             padding: 0 8px;
             box-shadow: none;
             transition: .3s ease;
+            font-size: 12px;
             cursor: pointer;
             &:hover {
                 border-color: #E85B48;

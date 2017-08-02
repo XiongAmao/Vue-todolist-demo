@@ -3,10 +3,15 @@
 import Vue from 'vue'
 import App from './App'
 // import router from './router'
+import iView from 'iview'
+import '../my-iview-theme/index.less'
+
+
 import 'normalize.css'
 import './assets/reset.css'
 import './assets/icon-font/iconfont'
 
+Vue.use(iView)
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
