@@ -1,58 +1,62 @@
 <template>
     <div class="todo-list">
-        <section class="newtask">
-            <input class="newtask-input" v-model="newTodo" type="text" @keypress.enter="addTodo" placeholder="输入待办事项，按回车键添加">
-            <div @click="addTodo" class="newtask-enter-btn">
-                <svg class="icon icon-input">
-                    <use xlink:href="#icon-input"></use>
-                </svg>
-            </div>
+        <div class="todo-list-wrapper">
+            <header>
+                To-do 记录待办
+            </header>
+            <section class="newtask">
+                <input class="newtask-input" v-model="newTodo" type="text" @keypress.enter="addTodo" placeholder="输入待办事项，按回车键添加">
+                <div @click="addTodo" class="newtask-enter-btn">
+                    <svg class="icon icon-input">
+                        <use xlink:href="#icon-input"></use>
+                    </svg>
+                </div>
     
-        </section>
-        <section class="task-bar">
-            <!-- <button @click="saveTodo" class="save-todo">保存</button> -->
-            <div class="task-bar-btns">
-                <Button @click="saveTodo"  icon="checkmark-circled" >保存</Button>
-                <Button @click="removeFinishedTodo" icon="trash-a" >清理所有已完成</Button>
-            </div>
-            <div class="task-state-sort">
-                <Select v-model="sortSelector" style="width:200px">
-                    <Option v-for="item in sortList" :value="item.value" :key="item.value">{{ item.label }}</Option>
-                </Select>
-            </div>
-        </section>
-        <section class="task-list">
-            <ol>
-                <li class="task-item" :class="{finished:todo.done}" v-for="(todo,index) in todoList" :key="index">
-                    <div class="task-content">
-                        <input type="checkbox" v-model="todo.done">
-                        <label>
-                            {{todo.todoContent}}
-                        </label>
-                    </div>
-                    <div class="task-info">
-                        <span class="created-time">
-                            创建时间：{{todo.createdAt | formateDate}}
-                        </span>
+            </section>
+            <section class="task-bar">
+                <!-- <button @click="saveTodo" class="save-todo">保存</button> -->
+                <div class="task-bar-btns">
+                    <Button @click="saveTodo" icon="checkmark-circled">保存</Button>
+                    <Button @click="removeFinishedTodo" icon="trash-a">清理所有已完成</Button>
+                </div>
+                <div class="task-state-sort">
+                    <Select style="width:200px">
+                        <Option v-for="item in sortList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                    </Select>
+                </div>
+            </section>
+            <section class="task-list">
+                <ol>
+                    <li class="task-item" :class="{finished:todo.done}" v-for="(todo,index) in todoList" :key="index">
+                        <div class="task-content">
+                            <input type="checkbox" v-model="todo.done">
+                            <label>
+                                {{todo.todoContent}}
+                            </label>
+                        </div>
+                        <div class="task-info">
+                            <span class="created-time">
+                                创建时间：{{todo.createdAt | formateDate}}
+                            </span>
     
-                    </div>
-                    <button class="task-remove-btn" v-show="todo.done" @click="removeTodo(todo)">删除
-                        <svg class="icon icon-input">
-                            <use xlink:href="#icon-input"></use>
-                        </svg>
-                    </button>
-                </li>
-            </ol>
-        </section>
+                        </div>
+                        <button class="task-remove-btn" v-show="todo.done" @click="removeTodo(todo)">删除
+                            <svg class="icon icon-input">
+                                <use xlink:href="#icon-input"></use>
+                            </svg>
+                        </button>
+                    </li>
+                </ol>
+            </section>
     
-        <!-- <new-tasks></new-tasks> -->
-        <!-- <task-list></task-list> -->
+        </div>
     </div>
 </template>
 
 <script>
 import NewTasks from "./NewTasks"
 import TasksList from "./TaskList"
+import { mapState } from 'vuex'
 export default {
     components: {
         'new-tasks': NewTasks,
@@ -71,7 +75,8 @@ export default {
                 value: 'createdTime',
                 label: '创建时间'
             }],
-            sortSelector:""
+            sortSelector: "",
+
         }
     },
     created: function () {
@@ -94,7 +99,7 @@ export default {
                 this.newTodo = ""
                 this.saveTodo()
             }
-            
+
         },
         removeTodo: function (todo) {
             let index = this.todoList.indexOf(todo)
@@ -106,14 +111,13 @@ export default {
             let dataString = JSON.stringify(self.todoList)
             window.localStorage.setItem('myTodos', dataString)
         },
-        removeFinishedTodo:function(){
-            this.todoList = this.todoList.filter(function(elem){
-                return !elem.done 
+        removeFinishedTodo: function () {
+            this.todoList = this.todoList.filter(function (elem) {
+                return !elem.done
             })
         }
     },
-    computed: {
-    },
+    computed: {},
     filters: {
         formateDate: function (value) {
             let date = new Date((value || ""))
@@ -121,24 +125,42 @@ export default {
                 day = date.getDay(),
                 year = date.getFullYear()
             return `${year}年${month}月${day}日`
-
         }
     }
 
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .todo-list {
-    color: #2A363B;
+    padding: 10px;
+    background: #f0efe9;
+    @media (max-width: 750px) {
+        padding: 0;
+    }
+    .todo-list-wrapper {
+        color: #2A363B;
+        margin: 0 auto;
+        max-width: 660px;
+        min-height: 100vh;
+        background: #fff;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 20px;
+        box-shadow: 0 5px 15px 2px #ccc;
+        @media (max-width: 750px) {
+            padding: 30px;
+        }
+        header {
+            font-size: 32px;
+            padding: 16px 0;
+            color: #999;
+        }
+    }
 }
 
-
-
-
-/* new-todo input */
-
 .newtask {
+    /* new-todo input */
     width: 100%;
     position: relative;
     border-radius: 6px;
@@ -192,31 +214,16 @@ export default {
     }
 }
 
-
-
-
-/* todo-action-bar */
-
 .task-bar {
+    /* todo-action-bar */
     margin-top: 16px;
     display: flex;
     justify-content: space-between;
-    font-size: 16px;
-    // span{font-size: 16px;}
-    // button {
-    //     padding: 8px 8px;
-    //     text-decoration: none;
-    //     outline: none;
-    //     cursor: pointer;
-    // }
+    font-size: 16px; // span{font-size: 16px;}
 }
 
-
-
-
-/* todo-list */
-
 .task-list {
+    /* todo-list */
     padding: 20px 0;
     .task-item {
         height: 48px;
