@@ -17,5 +17,8 @@ export default new Router({
       name: 'TodoList',
       component: TodoList
     }
-  ]
+  ],
+  beforeEnter: (to, from, next) => {
+    // ...
+  }
 })

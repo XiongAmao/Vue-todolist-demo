@@ -1,11 +1,11 @@
 import Vue from 'vue'
-import router from './router'
 import App from './App'
+import router from './router/index'
+import store from './vuex/store'
+// import Vuex & Vue-router
 
 import iView from 'iview'
 import '../my-iview-theme/index.less'
-
-import store from './store/store'
 
 import 'normalize.css'
 import './assets/reset.css'
