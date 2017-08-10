@@ -2,7 +2,7 @@
     <div class="todo-list">
         <div class="todo-list-wrapper">
             <header>
-                To-do 记录待办
+                TODO
             </header>
             <NewTasks></NewTasks>
             <TaskBar></TaskBar>
@@ -29,7 +29,11 @@ export default {
             this.$store.commit('saveTodoList')
         }
         this.$store.commit('getLocalTodoList')
-    }
+    },
+    beforeRouteEnter(to, from, next) {
+        console.log('beaforeRouteEnter ,in Todo List node')
+        next()
+    },
 
 }
 </script>

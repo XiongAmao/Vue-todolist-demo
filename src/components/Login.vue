@@ -6,18 +6,18 @@
 
 <script>
 export default {
-    data(){
+    data() {
         return {}
-    }
+    },
 }
 </script>
 
 <style lang="scss" >
-    .login-page{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border:1px red solid;
-        font-size: 60px;
-    }
+.login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px red solid;
+    font-size: 60px;
+}
 </style>

@@ -4,8 +4,7 @@ import Login from '@/components/Login'
 import TodoList from '@/components/TodoList'
 
 Vue.use(Router)
-
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/login',
@@ -18,7 +17,12 @@ export default new Router({
       component: TodoList
     }
   ],
-  beforeEnter: (to, from, next) => {
-    // ...
-  }
 })
+
+router.beforeEach((to, from, next) => {
+  next()
+  if(!to.name) next('Login')
+  // if router-name err , go to login
+})
+
+export default router 

@@ -8,17 +8,19 @@
                         {{todo.todoContent}}
                     </label>
                 </div>
+
                 <div class="task-info">
                     <span class="created-time">
                         创建时间：{{todo.createdAt | formateDate}}
                     </span>
-    
                 </div>
+
                 <button class="task-remove-btn" v-show="todo.done" @click="removeSingleTodo(todo)">删除
                     <svg class="icon icon-input">
                         <use xlink:href="#icon-input"></use>
                     </svg>
                 </button>
+                
             </li>
         </ol>
     </section>
@@ -35,12 +37,7 @@ export default {
             sortSelector: "",
         }
     },
-    created: function () {
-        window.onbeforeunload = () => {
-            this.$store.commit('saveTodoList')
-        }
-        this.$store.commit('getLocalTodoList')
-    },
+    created: function () { },
     methods: {
         removeSingleTodo: function (todo) {
             this.$store.commit('removeTodo', todo)
@@ -63,7 +60,6 @@ export default {
                 year = date.getFullYear()
             return `${year}年${month}月${day}日`
         }
-
     }
 }
 </script>
