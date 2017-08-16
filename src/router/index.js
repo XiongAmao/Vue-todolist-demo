@@ -21,7 +21,8 @@ const beforeEach = function(to,from,next){
     if (!to.name) next('Login')
 }
 const router = new Router({
-    routes
+    routes,
+    // mode:'history'
 })
 
 router.beforeEach((to, from, next) => {
