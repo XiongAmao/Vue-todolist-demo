@@ -19,5 +19,13 @@ export default {
         state.todoList = state.todoList.filter(function (elem) {
             return !elem.done
         })
+    },
+    login(state, payload) {
+        let { email, username, password } = payload
+        console.log(email, username, password)
+        AV.User.logIn(username, password).then(function (loginedUser) {
+
+        }, function (error) {
+        });
     }
 }

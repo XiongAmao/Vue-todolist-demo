@@ -42,6 +42,7 @@ export default {
 .todo-list {
     padding: 10px;
     background: #f0efe9;
+
     @media (max-width: 750px) {
         padding: 0;
     }
@@ -58,6 +59,7 @@ export default {
         @media (max-width: 750px) {
             padding: 30px;
         }
+
         header {
             font-size: 32px;
             padding: 16px 0;

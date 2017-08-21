@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from '@/components/Login'
+import Home from '@/components/Home'
 import TodoList from '@/components/TodoList'
 
 Vue.use(Router)
@@ -8,7 +8,7 @@ const routes = [
     {
         path: '/login',
         name: 'Login',
-        component: Login,
+        component: Home,
         alias: '/'
     }, {
         path: '/todo',
@@ -23,6 +23,7 @@ const beforeEach = function(to,from,next){
 const router = new Router({
     routes,
     // mode:'history'
+    // 如果需要开启HTML5 history模式需要后端支持，当匹配不到资源时返回index.html
 })
 
 router.beforeEach((to, from, next) => {

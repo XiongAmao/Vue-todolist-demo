@@ -8,19 +8,19 @@
                         {{todo.todoContent}}
                     </label>
                 </div>
-
+    
                 <div class="task-info">
                     <span class="created-time">
                         创建时间：{{todo.createdAt | formateDate}}
                     </span>
                 </div>
-
+    
                 <button class="task-remove-btn" v-show="todo.done" @click="removeSingleTodo(todo)">删除
                     <svg class="icon icon-input">
                         <use xlink:href="#icon-input"></use>
                     </svg>
                 </button>
-                
+    
             </li>
         </ol>
     </section>
@@ -68,6 +68,7 @@ export default {
 .task-list {
     /* todo-list */
     padding: 20px 0;
+
     .task-item {
         height: 48px;
         line-height: 48px;
@@ -80,9 +81,11 @@ export default {
         transition: 0.3s linear;
         overflow: hidden;
         margin-bottom: 10px;
+
         &:hover {
             background: rgba(0, 0, 0, .03);
         }
+
         &::after {
             content: '';
             display: block;
@@ -93,32 +96,39 @@ export default {
             width: 4px;
             background: #24BABC;
         }
+
         &.urgent {
             &::after {
                 background: #EF9037;
             }
         }
+
         &.finished {
             .task-info {
                 transform: translateX(-4em);
             }
+
             .task-content {
                 label {
                     text-decoration: line-through;
                     color: #aaa;
                 }
             }
+
             &::after {
                 background: #E85B48;
             }
         }
+
         .task-info {
             transition: .3s ease;
+
             span {
                 font-size: 12px;
                 color: #999;
             }
         }
+
         .task-remove-btn {
             position: absolute;
             top: 50%;
@@ -138,6 +148,7 @@ export default {
             transition: .3s ease;
             font-size: 12px;
             cursor: pointer;
+
             &:hover {
                 border-color: #E85B48;
                 color: #E85B48;
@@ -148,4 +159,3 @@ export default {
     }
 }
 </style>
-

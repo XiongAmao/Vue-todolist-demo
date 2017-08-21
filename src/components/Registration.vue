@@ -1,17 +1,17 @@
 <template>
-    <Form ref="loginForm" :model="loginForm" :rules="ruleLogin">
+    <Form ref="registrationForm" :model="registrationForm" :rules="ruleLogin">
         <Form-item prop="username">
-            <Input type="text" v-model="loginForm.username" placeholder="请输入账号或邮箱">
+            <Input type="text" v-model="registrationForm.username" placeholder="请输入账号或邮箱">
             <Icon type="ios-person-outline" slot="prepend"></Icon>
             </Input>
         </Form-item>
         <Form-item prop="password">
-            <Input type="password" v-model="loginForm.password" placeholder="请输入密码">
+            <Input type="password" v-model="registrationForm.password" placeholder="请输入密码">
             <Icon type="ios-locked-outline" slot="prepend"></Icon>
             </Input>
         </Form-item>
         <Form-item>
-            <Button type="primary" @click="handleSubmit('loginForm')">登录</Button>
+            <Button type="primary" @click="handleSubmit('registrationForm')">注册</Button>
         </Form-item>
     </Form>
 </template>
@@ -19,7 +19,7 @@
 export default {
     data() {
         return {
-            loginForm: {
+            registrationForm: {
                 username: '',
                 password: '',
                 email: ''
@@ -40,8 +40,9 @@ export default {
             this.$refs[name].validate((valid) => {
                 if (valid) {
                     this.$Message.success('提交成功!');
-                    this.$store.dispatch('login', {
-                        loginForm: this.loginForm
+
+                    this.$store.dispatch('register', {
+                        registrationForm: this.registrationForm
                     })
                 } else {
                     this.$Message.error('表单验证失败!');
