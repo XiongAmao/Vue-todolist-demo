@@ -1,8 +1,17 @@
+import {
+    ADD_TODO,
+    REMOVE_TODO,
+    UPDATE_TODOS,
+    LOGIN,
+    LOGOUT,
+    TOGGLE_LOGIN_VIEW,
+} from './mutation-types.js'
+
 export default {
-    addTodo(state, payload) {
+    [ADD_TODO](state, payload) {
         state.todoList.push(payload)
     },
-    removeTodo(state, payload) {
+    [REMOVE_TODO](state, payload) {
         let index = state.todoList.indexOf(payload)
         state.todoList.splice(index, 1)
     },
@@ -20,12 +29,14 @@ export default {
             return !elem.done
         })
     },
-    login(state, payload) {
-        let { email, username, password } = payload
-        console.log(email, username, password)
-        AV.User.logIn(username, password).then(function (loginedUser) {
-
-        }, function (error) {
-        });
+    [LOGIN](state, payload) {
+        let { user } = payload
+        state.user = user
+    },
+    [LOGOUT](state, payload) {
+        state.user = null
+    },
+    [TOGGLE_LOGIN_VIEW](state, choice) {
+        state.loginPanelView = choice ? choice : 'Login'
     }
 }

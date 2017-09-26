@@ -5,5 +5,6 @@ export default {
     user:null,
     password:'',
     email:'',
-    username:''
+    username:'',
+    loginPanelView:'Login',
 }

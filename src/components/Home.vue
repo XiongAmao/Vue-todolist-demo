@@ -1,30 +1,47 @@
 <template>
     <div class="login-page">
         <div class="login-page-container">
+
+            <div class="login-panel">
+                <transition name="login-fade" mode="out-in">
+                    <component v-bind:is="loginView"></component>
+                </transition>
+            </div>
+
             <div class="login-banner">
                 <div class="title">
-                    To-do
+                    Todo
                 </div>
                 <div class="description">你的待办事项列表</div>
             </div>
-            <div class="login-panel">
-                <Login></Login>
-            </div>
+
         </div>
+
     </div>
 </template>
 
 <script>
 import Login from './Login'
+import SignUp from './SignUp'
+
 export default {
     components: {
-        Login
+        Login,
+        SignUp
     },
     data() {
         return {
-
         }
     },
+    methods: {
+        
+    },
+    computed: {
+        loginView: function() {
+            return this.$store.state.loginPanelView
+        }
+    }
+
 }
 </script>
 
@@ -34,22 +51,25 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 60px;
     .login-page-container {
         display: flex;
         justify-content: center;
-        height: 400px;
-        border: 1px solid #00bdbd;
+        height: 500px;
+        width: 800px;
+        border: 1px solid #00D4C4;
         border-radius: 4px;
         box-shadow: 0 3px 10px 3px #e3e3e3;
     }
     .login-banner {
         padding: 10px;
-        padding-top: 15%;
-        width: 300px;
+        padding-top: 5%;
+        width: 50%;
+        text-align: center;
+        background: #00D4C4;
         .title {
-            font-size: 48px;
+            font-size: 80px;
             margin-bottom: 20px;
+            color: #444;
         }
 
         .description {
@@ -58,9 +78,19 @@ export default {
     }
 
     .login-panel {
-        border: 1px solid;
-        width: 400px;
+        width: 50%;
         padding: 10px 20px;
     }
+}
+
+
+.login-fade-enter-active,
+.login-fade-leave-active {
+    transition: opacity .3s ease;
+}
+
+.login-fade-enter,
+.login-fade-leave-to {
+    opacity: 0;
 }
 </style>
