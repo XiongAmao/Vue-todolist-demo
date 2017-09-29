@@ -23,7 +23,116 @@ npm run build --repor
 
 ------
 
+
+
+以下是该项目中学习的一些笔记：
+
 # Vue
+
+## Vue基础
+### <slot> 插槽接口
+在使用iView时，发现表单组件可以进行嵌套：
+```html
+<Form>
+	<FormItem>
+		<Input>
+	</FromItem>
+</Form>
+```
+于是研究了一下它的实现。对于vue组件，其模板内容都是在自身组件作用域内编译的：
+```html
+<parent-component>    
+	<child-component>
+		{{ message }}
+		/* {{ message }} is complied in parent scope  */
+	</child-component>
+</parent-component>
+```
+即父组件模板的内容在父组件作用域内编译；子组件模板的内容在子组件作用域内编译。指令也是同理。
+在这里，Vue提供了一个`<slot>`插口作为内容分发。
+
+1. 对于子组件而言，`<slot>`内的任何内容都被视为备用内容。备用内容在子组件的作用域内编译，并且只有在宿主元素为空，且没有要插入的内容时才显示备用内容。
+2. 如果子组件模板中**只有一个没有属性**的插槽时，父组件整个内容片段将插入插槽所在的DOM位置。并替换掉插槽标签本身。
+3. `<slot>`可以使用name属性来配置分发具体插槽，同时可以有一个默认插槽（匿名）作为匹配不到内容片段的备选。
+
+**单个插槽**：
+```html
+/* parent */
+<div>
+  <h1>I'm the parent title</h1>
+  <child-component>
+  	<p>This is some original content</p>
+  </child-component>
+</div>
+
+/* child-component */
+<div>
+  <h2>I'm the child title</h2>
+  <slot>
+    <p>This will only be displayed if there is no content to be distributed.</p>
+  </slot>
+  <p>I'm the child paragraphs</p>
+</div>
+
+/* rendered result */
+<div>
+  <h1>I'm the parent title</h1>
+  <div>
+    <h2>I'm the child title</h2>
+    <p>This is some original content</p>
+    <p>I'm the child paragraphs</p>
+  </div>
+</div>
+```
+
+**具名插槽**：
+```html
+/* app-layout */
+<div class="container">
+  <header>
+    <slot name="header"></slot>
+  </header>
+  <main>
+    <slot></slot>
+  </main>
+  <footer>
+    <slot name="footer"></slot>
+  </footer>
+</div>
+
+/* parent */
+<app-layout>
+  <h1 slot="header">这里可能是一个页面标题</h1>
+  
+  /* 父组件中使用slot属性指向具体子组件的位置 */
+  
+  <p>主要内容的一个段落。</p>
+  <p>另一个主要段落。</p>
+  <p slot="footer">这里有一些联系信息</p>
+</app-layout>
+
+
+
+/* rendered result */
+<div class="container">
+  <header>
+    <h1>这里可能是一个页面标题</h1>
+  </header>
+  <main>
+    <p>主要内容的一个段落。</p>
+    <p>另一个主要段落。</p>
+  </main>
+  <footer>
+    <p>这里有一些联系信息</p>
+  </footer>
+</div>
+```
+
+
+
+
+
+参考：[Vue 插槽分发内容](https://cn.vuejs.org/v2/guide/components.html#使用插槽分发内容)
 
 ## Vuex
 为了学习单文件组件，尝试使用Vuex进行数据统一管理。
