@@ -9,7 +9,7 @@ import '../my-iview-theme/index.less'
 
 import 'normalize.css'
 import './assets/reset.css'
-import './assets/icon-font/iconfont'
+// import './assets/icon-font/iconfont'
 
 Vue.use(iView)
 Vue.config.productionTip = false

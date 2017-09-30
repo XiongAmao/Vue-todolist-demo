@@ -1,15 +1,37 @@
 <template>
     <div class="login">
         <h1>Log In</h1>
-        <form>
-            <div class="form-item">
-                <input id="lg-username" class="item-text" type="text">
+        <form class="form">
+            <div class="form-item" :class="{ filled: usernameFilled }">
+                <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-username"></use>
+                </svg>
+                <input id="lg-username" v-model="loginForm.username" class="item-text" type="text">
                 <label for="lg-username">Username</label>
+
             </div>
 
-            <div class="form-item">
-                <input id="lg-password" class="item-text" type="password">
+            <div class="form-item" :class="{ filled: passwordFilled }">
+                <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-password"></use>
+                </svg>
+
+                <input id="lg-password" :type="showPassword ? 'text' : 'password'" :value="loginForm.password" v-on:input="loginForm.password = $event.target.value" class="item-text">
                 <label for="lg-password">Password</label>
+                
+                <transition name="fade">
+                    <div v-if="loginForm.password" @click="toggleShowPassword" class="password-hidden-btn">
+
+                        <svg v-show="!showPassword" class="icon" aria-hidden="true">
+                            <use xlink:href="#icon-eye"></use>
+                        </svg>
+
+                        <svg v-show="showPassword" class="icon" aria-hidden="true">
+                            <use xlink:href="#icon-eyeHide"></use>
+                        </svg>
+                    </div>
+                </transition>
+
             </div>
 
             <input type="submit" class="form-submit" value="Log In">
@@ -29,16 +51,30 @@ export default {
                 username: '',
                 password: ''
             },
+            showPassword: false,
         }
+    },
+    mounted: function() {
+
     },
     methods: {
         handleSubmit: function(name) {
             var self = this
         },
         toggleView: function() {
-
             this.$store.commit('TOGGLE_LOGIN_VIEW', 'SignUp')
-
+        },
+        toggleShowPassword: function() {
+            if (!this.loginForm.password) return
+            this.showPassword = !this.showPassword
+        }
+    },
+    computed: {
+        usernameFilled: function() {
+            return this.loginForm.username ? true : false
+        },
+        passwordFilled: function() {
+            return this.loginForm.password ? true : false
         }
     }
 }
@@ -46,26 +82,48 @@ export default {
 
 <style lang="scss">
 .login-panel {
+    padding: 10px 40px;
     h1 {
         text-align: center;
-        margin-bottom:40px;
+        margin-bottom: 40px;
     }
-    form {
+    .form {
         margin-top: 12px;
         .form-item {
             position: relative;
             border-bottom: #bdbdbd 1px solid;
             margin-bottom: 40px;
+            /*  */
+            &.filled {
+                label {
+                    font-size: 12px;
+                    transform: translate3d(0, -70%, 0);
+                    left: 0;
+                    color: #00BDC4;
+                } // .icon {
+                //     fill: #00BDC4;
+                // }
+            }
+            .icon {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 20px;
+                fill: #bdbdbd;
+                transition: .3s;
+            }
             .item-text {
-                padding: 12px 12px 12px 3em;
+                padding: 12px 12px 12px 32px;
                 width: 100%;
                 border: none;
+                outline: none;
             }
             .item-text:focus+label {
-                font-size:12px;
-                transform: translate3d(0, -90%, 0);
-                left:0;
-                color:#00BDC4;
+                font-size: 12px;
+                transform: translate3d(0, -70%, 0);
+                left: 0;
+                color: #00BDC4;
             }
 
             label {
@@ -73,10 +131,36 @@ export default {
                 height: 42px;
                 line-height: 42px;
                 top: 0;
-                left: 48px;
+                left: 32px;
                 text-align: center;
                 color: #aaa;
                 transition: .3s ease-out;
+            }
+            .password-hidden-btn {
+                position: absolute;
+                top: 0;
+                right: 0;
+                height: 100%;
+                width: 20px;
+                cursor: pointer;
+                svg {
+                    transition: .3s;
+                }
+                &:hover {
+                    svg {
+                        fill: #7d8699;
+                    }
+                }
+            }
+            .fade-enter-active,
+            .fade-leave-active {
+                transition: all .3s ease;
+            }
+            .fade-enter,
+            .fade-leave-to
+            /* .slide-fade-leave-active for below version 2.1.8 */
+            {
+                opacity: 0;
             }
         }
     }

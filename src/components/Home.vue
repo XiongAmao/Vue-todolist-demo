@@ -79,7 +79,6 @@ export default {
 
     .login-panel {
         width: 50%;
-        padding: 10px 20px;
     }
 }
 
