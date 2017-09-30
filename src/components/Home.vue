@@ -1,23 +1,25 @@
 <template>
-    <div class="login-page">
-        <div class="login-page-container">
+    <transition name="homepage-fade">
+        <div class="homepage">
+            <div class="homepage-container">
 
-            <div class="login-panel">
-                <transition name="login-fade" mode="out-in">
-                    <component v-bind:is="loginView"></component>
-                </transition>
-            </div>
-
-            <div class="login-banner">
-                <div class="title">
-                    Todo
+                <div class="login-panel">
+                    <transition name="login-fade" mode="out-in">
+                        <component v-bind:is="loginView"></component>
+                    </transition>
                 </div>
-                <div class="description">你的待办事项列表</div>
+
+                <div class="home-banner">
+                    <div class="title">
+                        Todo
+                    </div>
+                    <div class="description">你的待办事项列表</div>
+                </div>
+
             </div>
 
         </div>
-
-    </div>
+    </transition>
 </template>
 
 <script>
@@ -34,7 +36,7 @@ export default {
         }
     },
     methods: {
-        
+
     },
     computed: {
         loginView: function() {
@@ -46,12 +48,12 @@ export default {
 </script>
 
 <style lang="scss" >
-.login-page {
+.homepage {
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    .login-page-container {
+    .homepage-container {
         display: flex;
         justify-content: center;
         height: 500px;
@@ -60,7 +62,7 @@ export default {
         border-radius: 4px;
         box-shadow: 0 3px 10px 3px #e3e3e3;
     }
-    .login-banner {
+    .home-banner {
         padding: 10px;
         padding-top: 5%;
         width: 50%;
@@ -90,6 +92,15 @@ export default {
 
 .login-fade-enter,
 .login-fade-leave-to {
+    opacity: 0;
+}
+.homepage-fade-enter-active,
+.homepage-fade-leave-active {
+    transition: opacity .3s ease;
+}
+
+.homepage-fade-enter,
+.homepage-fade-leave-to {
     opacity: 0;
 }
 </style>
