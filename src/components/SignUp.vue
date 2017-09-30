@@ -6,7 +6,7 @@
                 <svg class="icon" aria-hidden="true">
                     <use xlink:href="#icon-email"></use>
                 </svg>
-                <input id="su-email" v-model="signUpForm.email" class="item-text" type="email">
+                <input id="su-email" v-model="signUpForm.email" class="item-text" type="email" autocomplete="false">
                 <label for="su-email">Email</label>
             </div>
 
@@ -14,7 +14,7 @@
                 <svg class="icon" aria-hidden="true">
                     <use xlink:href="#icon-username"></use>
                 </svg>
-                <input id="su-username" v-model="signUpForm.username" class="item-text" type="text">
+                <input id="su-username" v-model="signUpForm.username" class="item-text" type="text" autocomplete="false">
                 <label for="su-username">Username</label>
             </div>
 
@@ -22,21 +22,27 @@
                 <svg class="icon" aria-hidden="true">
                     <use xlink:href="#icon-password"></use>
                 </svg>
-                <input 
-                    id="su-password" 
-                    :type="showPassword ? 'text' : 'password'" 
-                    :value="signUpForm.password" 
-                    v-on:input="signUpForm.password = $event.target.value" class="item-text">
+                <input id="su-password" :type="showPassword ? 'text' : 'password'" :value="signUpForm.password" v-on:input="signUpForm.password = $event.target.value" class="item-text">
                 <label for="su-password">Password</label>
-                
-                <transition name="fade"> 
+
+                <transition name="fade">
                     <div v-if="signUpForm.password" @click="toggleShowPassword" class="password-hidden-btn">
-                       <svg class="icon" aria-hidden="true">
-                           <use xlink:href="#icon-eye"></use>
-                       </svg>
+                        <svg v-show="!showPassword" class="icon" aria-hidden="true">
+                            <use xlink:href="#icon-eye"></use>
+                        </svg>
+
+                        <svg v-show="showPassword" class="icon" aria-hidden="true">
+                            <use xlink:href="#icon-eyeHide"></use>
+                        </svg>
                     </div>
                 </transition>
             </div>
+
+            <transition name="error-fade">
+                <div v-if="errorMsg" class="form-error">
+                    <span>{{ errorMsg }}</span>
+                </div>
+            </transition>
 
             <input type="submit" class="form-submit" value="Sign In">
         </form>
@@ -61,6 +67,7 @@ export default {
                 email: '',
             },
             showPassword: false,
+            errorMsg:'xxx'
         }
     },
     methods: {
@@ -71,8 +78,8 @@ export default {
         toggleView: function() {
             this.$store.commit('TOGGLE_LOGIN_VIEW', 'Login')
         },
-        toggleShowPassword: function(){
-            if(!this.signUpForm.password) return
+        toggleShowPassword: function() {
+            if (!this.signUpForm.password) return
             this.showPassword = !this.showPassword
         }
     },

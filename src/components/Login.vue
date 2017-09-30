@@ -6,7 +6,7 @@
                 <svg class="icon" aria-hidden="true">
                     <use xlink:href="#icon-username"></use>
                 </svg>
-                <input id="lg-username" v-model="loginForm.username" class="item-text" type="text">
+                <input id="lg-username" v-model="loginForm.username" class="item-text" type="text" autocomplete="false">
                 <label for="lg-username">Username</label>
 
             </div>
@@ -18,7 +18,7 @@
 
                 <input id="lg-password" :type="showPassword ? 'text' : 'password'" :value="loginForm.password" v-on:input="loginForm.password = $event.target.value" class="item-text">
                 <label for="lg-password">Password</label>
-                
+
                 <transition name="fade">
                     <div v-if="loginForm.password" @click="toggleShowPassword" class="password-hidden-btn">
 
@@ -34,13 +34,22 @@
 
             </div>
 
+            <transition name="error-fade">
+                <div v-if="errorMsg" class="form-error">
+                    <span>{{ errorMsg }}</span>
+                </div>
+            </transition>
+
             <input type="submit" class="form-submit" value="Log In">
+
         </form>
+
         <div class="form-toggle">
-            <p ref="xxx">or</p>
+            <p>or</p>
             <a @click.stop.prevent="toggleView" class="">Create a New Account !</a>
         </div>
 
+        <button @click="test">xxx</button>
     </div>
 </template>
 <script>
@@ -52,6 +61,7 @@ export default {
                 password: ''
             },
             showPassword: false,
+            errorMsg: '登录失败次数超过限制，请稍候尝试登录'
         }
     },
     mounted: function() {
@@ -67,6 +77,9 @@ export default {
         toggleShowPassword: function() {
             if (!this.loginForm.password) return
             this.showPassword = !this.showPassword
+        },
+        test: function() {
+            this.errorMsg = this.errorMsg ? '' : '登录失败次数超过限制，请稍候尝试登录'
         }
     },
     computed: {
@@ -92,17 +105,14 @@ export default {
         .form-item {
             position: relative;
             border-bottom: #bdbdbd 1px solid;
-            margin-bottom: 40px;
-            /*  */
+            margin-bottom: 32px;
             &.filled {
                 label {
                     font-size: 12px;
                     transform: translate3d(0, -70%, 0);
                     left: 0;
                     color: #00BDC4;
-                } // .icon {
-                //     fill: #00BDC4;
-                // }
+                }
             }
             .icon {
                 position: absolute;
@@ -125,7 +135,6 @@ export default {
                 left: 0;
                 color: #00BDC4;
             }
-
             label {
                 position: absolute;
                 height: 42px;
@@ -157,14 +166,25 @@ export default {
                 transition: all .3s ease;
             }
             .fade-enter,
-            .fade-leave-to
-            /* .slide-fade-leave-active for below version 2.1.8 */
-            {
+            .fade-leave-to {
+                opacity: 0;
+            }
+        }
+
+        .form-error {
+            text-align: center;
+            color: #ff0072;
+            transform: translateY(-12px);
+            &.error-fade-enter-active,
+            &.error-fade-leave-active {
+                transition: all .3s ease;
+            }
+            &.error-fade-enter,
+            &.error-fade-leave-to {
                 opacity: 0;
             }
         }
     }
-
 
     .form-submit {
         display: block;
