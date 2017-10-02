@@ -1,27 +1,32 @@
 <template>
     <section class="task-list">
         <ol>
-            <li class="task-item" :class="{finished:todo.done}" v-for="(todo,index) in todoList" :key="index">
-                <div class="task-content">
-                    <input type="checkbox" v-model="todo.done">
-                    <label>
-                        {{todo.todoContent}}
-                    </label>
+            <li class="task-item" :class="{ finished: todo.done, editing: todo == editedTodo }" v-for="( todo, index ) in todoList" :key="index">
+
+                <input class="checkbox" type="checkbox" v-model="todo.done">
+                <label class="content" @dblclick="editTodo(todo)">
+                    <span>{{todo.todoContent}}</span>
+                </label>
+
+                <div class="task-editor">
+                    <input type="text"
+                    v-model="editingTodo"
+                    v-todo-focus="todo == editedTodo"
+                    @blur="doneEdit(todo)"
+                    @keyup.enter="doneEdit(todo)"
+                    @keyup.esc="cancelEdit(todo)">
                 </div>
-    
-                <div class="task-info">
-                    <span class="created-time">
-                        创建时间：{{todo.createdAt | formateDate}}
-                    </span>
-                </div>
-    
-                <button class="task-remove-btn" v-show="todo.done" @click="removeSingleTodo(todo)">删除
+
+                <button class="task-remove-btn" @click="removeSingleTodo(todo)">
                     <svg class="icon icon-input">
-                        <use xlink:href="#icon-input"></use>
+                        <use xlink:href="#icon-close"></use>
                     </svg>
                 </button>
-    
+
             </li>
+        </ol>
+        <ol>
+
         </ol>
     </section>
 </template>
@@ -35,16 +40,33 @@ export default {
                 label: '创建时间'
             }],
             sortSelector: "",
+            editedTodo: null,
+            beforeEditCache: '',
+            editingTodo:''
         }
     },
-    created: function () { },
+    created: function() { },
     methods: {
-        removeSingleTodo: function (todo) {
-            this.$store.commit('removeTodo', todo)
+        removeSingleTodo: function(todo) {
+            this.$store.commit('REMOVE_TODO', todo)
             // delete "1" element from index to end 
         },
-        saveTodo: function () {
+        saveTodo: function() {
             this.$store.commit('saveTodoList')
+        },
+        editTodo: function(todo) {
+            console.log(1)
+            this.beforeEditCache = this.editingTodo = todo.todoContent
+            this.editedTodo = todo
+            
+        },
+        doneEdit: function(todo) {
+            console.log('done')
+            this.editedTodo = null
+        },
+        cancelEdit: function(todo) {
+            console.log('cancel')
+            this.editedTodo = nul
         }
     },
     computed: {
@@ -53,12 +75,19 @@ export default {
         }
     },
     filters: {
-        formateDate: function (value) {
+        formateDate: function(value) {
             let date = new Date((value || ""))
             let month = date.getMonth() + 1,
                 day = date.getDate(),
                 year = date.getFullYear()
             return `${year}年${month}月${day}日`
+        }
+    },
+    directives: {
+        'todo-focus': function(el, value) {
+            if (value) {
+                el.focus()
+            }
         }
     }
 }
@@ -78,12 +107,88 @@ export default {
         justify-content: space-between;
         border: 1px solid #ccc;
         border-radius: 4px;
-        transition: 0.3s linear;
+        transition: 0.3s;
         overflow: hidden;
-        margin-bottom: 10px;
+        margin-bottom: 12px;
+        // background: #ececec;
+        
+        .checkbox {
+            position: absolute;
+            top: 2px;
+            height: 100%;
+            width: 16px;
+            padding-top: 16px;
+            display: block;
+        }
+        .content {
+            cursor: text;
+            display: block;
+            width: 100%;
+            padding: 0 0 0 24px;
+        }
+
+        .task-info {
+            transition: .3s ease;
+
+            span {
+                font-size: 12px;
+                color: #999;
+            }
+        }
+
+        .task-editor {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: calc(100% - 34px);
+            display: none;
+            transition: 0.3s ;
+            // border:1px solid #999;
+            input {
+                transition: 0.3s ;
+                width: 100%;
+                border: none;
+                outline: none;
+                text-decoration: underline;
+            }
+        }
+
+        .task-remove-btn {
+            position: absolute;
+            top: 50%;
+            right: 1em;
+            transform: translateY(-50%);
+            display: block;
+            padding: 0;
+            height: 30px;
+            border: none;
+            background: none;
+            opacity: 0;
+            outline: none;
+            transition: .3s ease;
+            cursor: pointer;
+        }
 
         &:hover {
-            background: rgba(0, 0, 0, .03);
+            // background: #ececec;
+            // background: #fff;
+            .task-editor {
+                input {
+                    // background: #ececec;
+                }
+            }
+            .task-remove-btn {
+                opacity: 1;
+            }
+        }
+
+        &.editing {
+            .task-editor {
+                display: block;
+                input{
+                    color:#aaa;
+                }
+            }
         }
 
         &::after {
@@ -108,53 +213,14 @@ export default {
                 transform: translateX(-4em);
             }
 
-            .task-content {
-                label {
-                    text-decoration: line-through;
-                    color: #aaa;
-                }
+            .content {
+                text-decoration: line-through;
+                color: #aaa;
             }
 
             &::after {
                 background: #E85B48;
             }
-        }
-
-        .task-info {
-            transition: .3s ease;
-
-            span {
-                font-size: 12px;
-                color: #999;
-            }
-        }
-
-        .task-remove-btn {
-            position: absolute;
-            top: 50%;
-            right: 1em;
-            transform: translateY(-50%);
-            padding: 0;
-            display: block;
-            outline: none;
-            height: 30px;
-            border: none;
-            background: #E85B48;
-            border: 1px solid #E85B48;
-            color: #fff;
-            border-radius: 4px;
-            padding: 0 8px;
-            box-shadow: none;
-            transition: .3s ease;
-            font-size: 12px;
-            cursor: pointer;
-
-            &:hover {
-                border-color: #E85B48;
-                color: #E85B48;
-                background: #fff;
-            }
-            &:active {}
         }
     }
 }

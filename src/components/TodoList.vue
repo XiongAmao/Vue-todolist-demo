@@ -2,10 +2,13 @@
     <div class="todo-list">
         <div class="todo-list-wrapper">
             <header>
-                TODO
+                <h1>Todo</h1>
+                <div class="login-info">
+                    {{ loggedUser }}
+                </div>
             </header>
             <NewTasks></NewTasks>
-            <TaskBar></TaskBar>
+            <!-- <TaskBar></TaskBar> -->
             <TaskList></TaskList>
         </div>
     </div>
@@ -24,7 +27,13 @@ export default {
     data() {
         return {}
     },
-    created: function () {
+    computed:{
+        loggedUser: function(){
+
+            return this.$store.state.user
+        }
+    },
+    created: function() {
         window.onbeforeunload = () => {
             this.$store.commit('saveTodoList')
         }
@@ -40,30 +49,30 @@ export default {
 
 <style lang="scss" >
 .todo-list {
-    padding: 10px;
-    background: #f0efe9;
-
+    padding: 10px; // background: #f0efe9
     @media (max-width: 750px) {
         padding: 0;
     }
     .todo-list-wrapper {
         color: #2A363B;
         margin: 0 auto;
-        max-width: 660px;
-        min-height: 100vh;
+        max-width: 660px; 
+        min-height: calc(100vh - 20px);
         background: #fff;
         border: 1px solid #ccc;
-        border-radius: 4px;
+        border-radius: 6px;
         padding: 20px;
-        box-shadow: 0 5px 15px 2px #ccc;
+        box-shadow: 0 7px 20px 0px rgba(0, 0, 0, 0.3);
         @media (max-width: 750px) {
             padding: 30px;
         }
 
         header {
-            font-size: 32px;
-            padding: 16px 0;
-            color: #999;
+            h1 {
+                font-size: 32px;
+                padding: 16px 0;
+                color: #999;
+            }
         }
     }
 }

@@ -5,6 +5,7 @@ import {
     LOGIN,
     LOGOUT,
     TOGGLE_LOGIN_VIEW,
+    SET_LOGIN_ERRORMESSAGE,
 } from './mutation-types.js'
 
 export default {
@@ -38,5 +39,8 @@ export default {
     },
     [TOGGLE_LOGIN_VIEW](state, choice) {
         state.loginPanelView = choice ? choice : 'Login'
+    },
+    [SET_LOGIN_ERRORMESSAGE](state, payload) {
+        
     }
 }

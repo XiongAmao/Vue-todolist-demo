@@ -49,7 +49,6 @@
             <a @click.stop.prevent="toggleView" class="">Create a New Account !</a>
         </div>
 
-        <button @click="test">xxx</button>
     </div>
 </template>
 <script>
@@ -78,9 +77,6 @@ export default {
             if (!this.loginForm.password) return
             this.showPassword = !this.showPassword
         },
-        test: function() {
-            this.errorMsg = this.errorMsg ? '' : '登录失败次数超过限制，请稍候尝试登录'
-        }
     },
     computed: {
         usernameFilled: function() {
@@ -95,6 +91,7 @@ export default {
 
 <style lang="scss">
 .login-panel {
+    background: #ffffff;
     padding: 10px 40px;
     h1 {
         text-align: center;
@@ -172,9 +169,16 @@ export default {
         }
 
         .form-error {
+            position: relative;
             text-align: center;
-            color: #ff0072;
-            transform: translateY(-12px);
+            color: #ff0072; 
+            span {
+                position: absolute;
+                top: 0;
+                left: 0;
+                transform: translateY(-130%) ;
+                font-size: 12px;
+            }
             &.error-fade-enter-active,
             &.error-fade-leave-active {
                 transition: all .3s ease;

@@ -28,9 +28,10 @@ export default {
                 let obj = {
                     todoContent: this.newTodo,
                     createdAt: new Date(),
-                    done: false
+                    done: false,
+                    editorActive:false
                 }
-                this.$store.commit('addTodo', obj)
+                this.$store.commit('ADD_TODO', obj)
                 this.newTodo = ""
                 this.$store.commit('saveTodoList')
             }
