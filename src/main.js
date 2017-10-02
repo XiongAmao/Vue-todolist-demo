@@ -11,6 +11,10 @@ import 'normalize.css'
 import './assets/reset.css'
 // import './assets/icon-font/iconfont'
 
+import VueParticles from 'vue-particles'
+Vue.use(VueParticles)
+
+
 Vue.use(iView)
 Vue.config.productionTip = false
 

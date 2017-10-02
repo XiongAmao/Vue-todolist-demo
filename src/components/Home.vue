@@ -1,6 +1,21 @@
 <template>
     <transition name="homepage-fade">
         <div class="homepage">
+            <vue-particles  class="particles" color="#dedede"
+            :particleOpacity="0.7"
+            :particlesNumber="80"
+            shapeType="circle"
+            :particleSize="4"
+            linesColor="#dedede"
+            :linesWidth="1"
+            :lineLinked="true"
+            :lineOpacity="0.4"
+            :linesDistance="150"
+            :moveSpeed="3"
+            :hoverEffect="true"
+            hoverMode="grab"
+            :clickEffect="false"
+            clickMode="push"></vue-particles>
             <div class="homepage-container">
 
                 <div class="login-panel">
@@ -17,7 +32,7 @@
                 </div>
 
             </div>
-
+            
         </div>
     </transition>
 </template>
@@ -25,6 +40,7 @@
 <script>
 import Login from './Login'
 import SignUp from './SignUp'
+// import d
 
 export default {
     components: {
@@ -42,6 +58,8 @@ export default {
         loginView: function() {
             return this.$store.state.loginPanelView
         }
+    },
+    mounted: function() {
     }
 
 }
@@ -53,14 +71,18 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
     .homepage-container {
+        overflow: hidden;
+        position: relative;
+        z-index: 2;
         display: flex;
         justify-content: center;
         height: 500px;
         width: 800px;
-        border: 1px solid #00D4C4;
-        border-radius: 4px;
-        box-shadow: 0 3px 10px 3px #e3e3e3;
+        // border: 1px solid rgba(0,0,0,0.5);
+        border-radius: 8px;
+        box-shadow: 0 7px 20px 0px rgba(0, 0, 0, 0.3);
     }
     .home-banner {
         padding: 10px;
@@ -94,6 +116,7 @@ export default {
 .login-fade-leave-to {
     opacity: 0;
 }
+
 .homepage-fade-enter-active,
 .homepage-fade-leave-active {
     transition: opacity .3s ease;
@@ -102,5 +125,16 @@ export default {
 .homepage-fade-enter,
 .homepage-fade-leave-to {
     opacity: 0;
+}
+
+.particles {
+    position: absolute;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    // background-color: #355C7D;
+    // background-repeat: no-repeat;
+    // background-size: cover;
+    background-position: 50% 50%;
 }
 </style>
