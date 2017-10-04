@@ -11,7 +11,7 @@ export default {
             commit('SET_ERRORMESSAGE', msg)
         })
     },
-    signup({ dispatch, commit, state }, { email, username, password }) {
+    signup({ dispatch, commit }, { email, username, password }) {
         var user = new AV.User();
         user.setUsername(username);
         user.setPassword(password);
@@ -23,11 +23,11 @@ export default {
             commit('SET_ERRORMESSAGE', msg)
         })
     },
-    logout({ commit, state }){
+    logout({ commit }){
         AV.User.logOut()
         commit('LOGOUT')
     },
-    checkUser({ commit, state }){
+    checkUser({ commit }){
         var user = AV.User.current()
         if(user){
             commit('SET_USER', user.toJSON()) 

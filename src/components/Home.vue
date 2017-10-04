@@ -41,7 +41,6 @@
 <script>
 import Login from './Login'
 import SignUp from './SignUp'
-// import d
 
 export default {
     components: {
@@ -52,9 +51,6 @@ export default {
         return {
         }
     },
-    methods: {
-
-    },
     computed: {
         loginView: function() {
             return this.$store.state.loginPanelView
@@ -64,16 +60,13 @@ export default {
         },
     },
     watch: {
+        // 监听用户是否登录
         'user':function() {
             if(this.$store.state.user){
                 this.$router.push('/todo')
             }
         }
     }
-    // beforeRouteEnter: (to, from, next) => {
-    //     console.log('in component Home.vue enter')
-    //     next()
-    // }
 }
 </script>
 

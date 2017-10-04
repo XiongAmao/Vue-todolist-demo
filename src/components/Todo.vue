@@ -5,14 +5,15 @@
                 <h1 class="todo-title">Todo</h1>
                 <div class="login-info">
                     <div class="info-user">
-                        Logged in as <span>{{ loggedUser }}</span>
+                        Logged in as
+                        <span>{{ loggedUser }}</span>
                     </div>
                     <div @click="logout" class="logout-btn">
                         Logout
                     </div>
-                    
+
                 </div>
-                
+
             </header>
 
             <NewTasks></NewTasks>
@@ -21,6 +22,7 @@
         <div class="todo-wrapper">
             <TaskBar></TaskBar>
             <TaskList></TaskList>
+            <div class="todo-intro">Double-click to edit a todo</div>
         </div>
     </div>
 </template>
@@ -38,8 +40,8 @@ export default {
     data() {
         return {}
     },
-    methods:{
-        logout: function(){
+    methods: {
+        logout: function() {
             this.$store.dispatch('logout')
             this.$router.push('/login')
         }
@@ -55,16 +57,10 @@ export default {
         }
         this.$store.commit('getLocalTodoList')
     },
-    beforeRouteEnter(to, from, next) {
-        console.log('beaforeRouteEnter ,in Todo List node')
-        // var user = this.$store.state.user
-        // if(!user){
-        //     next('/')
-        // } 
-        next()
-        
-        
-    },
+    // beforeRouteEnter(to, from, next) {
+    //     console.log('beaforeRouteEnter ,in Todo List node')
+    //     next()
+    // },
 
 }
 </script>
@@ -75,6 +71,7 @@ export default {
     overflow: hidden;
     .todo-wrapper {
         overflow: hidden;
+        position: relative;
         margin: 0 auto;
         max-width: 660px;
         background: #fff;
@@ -82,7 +79,7 @@ export default {
         box-shadow: 0 7px 20px 0px rgba(0, 0, 0, 0.3);
         color: #2A363B;
         margin-top: 20px;
-
+        padding-bottom: 20px;
         .todo-header {
             font-family: 'Orbitron', sans-serif;
             margin-bottom: 20px;
@@ -94,22 +91,29 @@ export default {
             .login-info {
                 display: flex;
                 justify-content: space-between;
-                color:#999;
-                span{
-                   color:#24BABC; 
-                   font-size:20px;
+                color: #999;
+                span {
+                    color: #24BABC;
+                    font-size: 20px;
                 }
-                .logout-btn{
+                .logout-btn {
                     cursor: pointer;
                     transition: .3s;
                     text-decoration: underline;
-                    color:#ff0072;
+                    color: #ff0072;
                     user-select: none;
-                    &:hover{
-                        color:#CE005C;
+                    &:hover {
+                        color: #CE005C;
                     }
                 }
             }
+        }
+        .todo-intro {
+            // font-family: 'Orbitron', sans-serif;
+            position: absolute;
+            bottom: 10px;
+            right: 20px;
+            color: #999;
         }
     }
 }
