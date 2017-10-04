@@ -15,6 +15,7 @@ const map = {
     219: "登录失败次数超过限制，请稍候尝试登录",
     502: "服务器维护",
 }
-export default function ({ code }) {
+export default function ( code ) {
+    console.log('codexxxxx',code)
     return map[code] || map.unknown
 }

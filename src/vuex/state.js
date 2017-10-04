@@ -2,10 +2,12 @@ import AV from './leancloud'
 
 export default {
     todoList: [],
-    user:null,
-    password:'',
-    email:'',
-    username:'',
-    loginPanelView:'Login',
-    navSelector:'all'
+    user: null,
+    password: '',
+    email: '',
+    username: '',
+    loginPanelView: 'Login',
+    navSelector: 'all',
+    errorMsg: '',
+    errorMsgState: false,
 }

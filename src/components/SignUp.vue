@@ -39,12 +39,14 @@
             </div>
 
             <transition name="error-fade">
-                <div v-if="errorMsg" class="form-error">
-                    <span>{{ errorMsg }}</span>
+                <div v-show="errorMsg" class="form-error" :class="{ active:errorMsgState }">
+                    <div class="error-text">{{ errorMsg }}</div>
                 </div>
             </transition>
 
-            <input type="submit" class="form-submit" value="Sign In">
+            <div class="form-submit">
+                <input @click="signUp" type="submit" class="submit-btn" value="Sign In">
+            </div>
         </form>
 
         <div class="form-toggle">
@@ -67,20 +69,24 @@ export default {
                 email: '',
             },
             showPassword: false,
-            errorMsg:'xxx'
         }
     },
     methods: {
-        handleSubmit: function(name) {
-            var self = this
-
-        },
         toggleView: function() {
             this.$store.commit('TOGGLE_LOGIN_VIEW', 'Login')
+            this.$store.commit('RESET_ERRORMESSAGE')
         },
         toggleShowPassword: function() {
             if (!this.signUpForm.password) return
             this.showPassword = !this.showPassword
+        },
+        signUp: function() {
+            if (!this.signUpForm.username) {
+                if (!this.signUpForm.password) {
+                    return
+                }
+            }
+            this.$store.dispatch('signup', this.signUpForm)
         }
     },
     computed: {
@@ -92,6 +98,19 @@ export default {
         },
         passwordFilled: function() {
             return this.signUpForm.password ? true : false
+        },
+        errorMsg: function() {
+            return this.$store.state.errorMsg
+        },
+        errorMsgState: function() {
+            return this.$store.state.errorMsgState
+        }
+    },
+    watch: {
+        errorMsgState: function() {
+            setTimeout(function() {
+                this.$store.state.errorMsgState = false
+            }.bind(this), 3000)
         }
     }
 }

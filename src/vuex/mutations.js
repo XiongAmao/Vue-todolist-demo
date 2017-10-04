@@ -2,10 +2,12 @@ import {
     ADD_TODO,
     REMOVE_TODO,
     UPDATE_TODOS,
+    SET_USER,
     LOGIN,
     LOGOUT,
     TOGGLE_LOGIN_VIEW,
-    SET_LOGIN_ERRORMESSAGE,
+    SET_ERRORMESSAGE,
+    RESET_ERRORMESSAGE,
     SET_TODONAV_SELECTOR,
 } from './mutation-types.js'
 
@@ -31,18 +33,27 @@ export default {
             return !elem.done
         })
     },
-    [LOGIN](state, payload) {
-        let { user } = payload
+    [SET_USER](state, user) {
+        console.log('mutate set uesr')
         state.user = user
     },
-    [LOGOUT](state, payload) {
+    [LOGIN](state, user) {
+        state.user = user
+    },
+    [LOGOUT](state) {
         state.user = null
     },
     [TOGGLE_LOGIN_VIEW](state, choice) {
         state.loginPanelView = choice ? choice : 'Login'
     },
-    [SET_LOGIN_ERRORMESSAGE](state, payload) {
-        
+    [SET_ERRORMESSAGE](state, msg) {
+        console.log('mutate set error msg')
+        state.errorMsg = msg
+        state.errorMsgState = true
+    },
+    [RESET_ERRORMESSAGE](state) { 
+        state.errorMsg = ''
+        state.errorMsgState = false
     },
     [SET_TODONAV_SELECTOR](state, payload) {
         state.navSelector = payload

@@ -2,15 +2,16 @@
     <div class="login">
         <h1>Log In</h1>
         <form class="form">
+            <!-- Username item -->
             <div class="form-item" :class="{ filled: usernameFilled }">
                 <svg class="icon" aria-hidden="true">
                     <use xlink:href="#icon-username"></use>
                 </svg>
                 <input id="lg-username" v-model="loginForm.username" class="item-text" type="text" autocomplete="false">
                 <label for="lg-username">Username</label>
-
             </div>
 
+            <!-- password item -->
             <div class="form-item" :class="{ filled: passwordFilled }">
                 <svg class="icon" aria-hidden="true">
                     <use xlink:href="#icon-password"></use>
@@ -35,12 +36,14 @@
             </div>
 
             <transition name="error-fade">
-                <div v-if="errorMsg" class="form-error">
-                    <span>{{ errorMsg }}</span>
+                <div v-show="errorMsg" class="form-error" :class="{ active:errorMsgState }">
+                    <div class="error-text">{{ errorMsg }}</div>
                 </div>
             </transition>
 
-            <input type="submit" class="form-submit" value="Log In">
+            <div class="form-submit">
+                <input @click="login" type="submit" class="submit-btn" value="Log In">
+            </div>
 
         </form>
 
@@ -52,6 +55,7 @@
     </div>
 </template>
 <script>
+
 export default {
     data() {
         return {
@@ -60,23 +64,28 @@ export default {
                 password: ''
             },
             showPassword: false,
-            errorMsg: '登录失败次数超过限制，请稍候尝试登录'
         }
     },
     mounted: function() {
 
     },
     methods: {
-        handleSubmit: function(name) {
-            var self = this
-        },
         toggleView: function() {
             this.$store.commit('TOGGLE_LOGIN_VIEW', 'SignUp')
+            this.$store.commit('RESET_ERRORMESSAGE')
         },
         toggleShowPassword: function() {
             if (!this.loginForm.password) return
             this.showPassword = !this.showPassword
         },
+        login: function() {
+            if (!this.loginForm.username) {
+                if (!this.loginForm.password) {
+                    return
+                }
+            }
+            this.$store.dispatch('login', this.loginForm)
+        }
     },
     computed: {
         usernameFilled: function() {
@@ -84,19 +93,33 @@ export default {
         },
         passwordFilled: function() {
             return this.loginForm.password ? true : false
+        },
+        errorMsg: function() {
+            return this.$store.state.errorMsg
+        },
+        errorMsgState: function(){
+            return this.$store.state.errorMsgState
+        }
+    },
+    watch:{
+        errorMsgState:function(){
+            setTimeout(function(){
+                this.$store.state.errorMsgState = false
+            }.bind(this),3000)
         }
     }
 }
 </script>
 
 <style lang="scss">
+/* include SignUp.vue */
 .login-panel {
     background: #ffffff;
     padding: 10px 40px;
     h1 {
         text-align: center;
         margin-bottom: 40px;
-        font-family: 'Orbitron', sans-serif 
+        font-family: 'Orbitron', sans-serif
     }
     .form {
         margin-top: 12px;
@@ -171,44 +194,64 @@ export default {
 
         .form-error {
             position: relative;
-            text-align: center;
-            color: #ff0072; 
-            span {
+            // text-align: center;
+            margin-left: 4px;
+            color: #ff0072;
+            .error-text {
                 position: absolute;
                 top: 0;
                 left: 0;
-                transform: translateY(-130%) ;
+                transform: translateY(-130%);
+                width:100%;
                 font-size: 12px;
             }
             &.error-fade-enter-active,
             &.error-fade-leave-active {
-                transition: all .3s ease;
+                transition: all 1s cubic-bezier(.62,1.53,.45,-0.68);
             }
             &.error-fade-enter,
             &.error-fade-leave-to {
                 opacity: 0;
             }
+            &.active{
+                animation: shine linear 1.5s infinite alternate;
+                @keyframes shine {
+                    0% {
+                        opacity: 1;
+                    }
+                    50%{
+                        opacity: .3;
+                    }
+                    100%{
+                        opacity: 1;
+                    }
+                }
+            }
         }
+
     }
 
     .form-submit {
-        display: block;
-        text-align: center;
-        width: 100%;
-        padding: 12px;
-        margin: 12px 0;
-        background: #00D4C4;
-        color: #fff;
-        outline: none;
-        text-decoration: none;
-        box-shadow: none;
-        cursor: pointer;
-        border: none;
-        border-radius: 4px;
-        transition: .3s ease-in-out;
-        box-shadow: 0 2px 10px 2px #e3e3e3;
-        &:hover {
-            background: #00BDC4;
+        overflow: hidden;
+        .submit-btn {
+            display: block;
+            text-align: center;
+            width: 100%;
+            padding: 12px;
+            margin: 12px 0;
+            background: #00D4C4;
+            color: #fff;
+            outline: none;
+            text-decoration: none;
+            box-shadow: none;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+            transition: .3s ease-in-out;
+            box-shadow: 0 2px 10px 2px #e3e3e3;
+            &:hover {
+                background: #00BDC4;
+            }
         }
     }
     .form-toggle {
