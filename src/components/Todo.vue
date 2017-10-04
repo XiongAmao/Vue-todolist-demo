@@ -1,14 +1,18 @@
 <template>
-    <div class="todo-list">
-        <div class="todo-list-wrapper">
+    <div class="todo">
+        <div class="todo-wrapper" style="padding: 20px;">
             <header>
                 <h1>Todo</h1>
                 <div class="login-info">
                     {{ loggedUser }}
                 </div>
             </header>
+
             <NewTasks></NewTasks>
-            <!-- <TaskBar></TaskBar> -->
+
+        </div>
+        <div class="todo-wrapper">
+            <TaskBar></TaskBar>
             <TaskList></TaskList>
         </div>
     </div>
@@ -27,8 +31,8 @@ export default {
     data() {
         return {}
     },
-    computed:{
-        loggedUser: function(){
+    computed: {
+        loggedUser: function() {
 
             return this.$store.state.user
         }
@@ -48,25 +52,19 @@ export default {
 </script>
 
 <style lang="scss" >
-.todo-list {
-    padding: 10px; // background: #f0efe9
-    @media (max-width: 750px) {
-        padding: 0;
-    }
-    .todo-list-wrapper {
-        color: #2A363B;
+.todo {
+    padding: 40px; 
+    overflow: hidden;
+    .todo-wrapper {
+        overflow: hidden;
         margin: 0 auto;
         max-width: 660px; 
-        min-height: calc(100vh - 20px);
         background: #fff;
-        border: 1px solid #ccc;
+        // border: 1px solid #ccc;
         border-radius: 6px;
-        padding: 20px;
         box-shadow: 0 7px 20px 0px rgba(0, 0, 0, 0.3);
-        @media (max-width: 750px) {
-            padding: 30px;
-        }
-
+        color: #2A363B;
+        margin-top:20px;
         header {
             h1 {
                 font-size: 32px;
@@ -74,6 +72,7 @@ export default {
                 color: #999;
             }
         }
+        
     }
 }
 </style>
