@@ -96,6 +96,7 @@ export default {
     h1 {
         text-align: center;
         margin-bottom: 40px;
+        font-family: 'Orbitron', sans-serif 
     }
     .form {
         margin-top: 12px;
@@ -213,6 +214,7 @@ export default {
     .form-toggle {
         color: #7d8699;
         text-align: center;
+        cursor: pointer;
         p {
             padding: 0 0 12px;
         }

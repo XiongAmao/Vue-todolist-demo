@@ -91,12 +91,14 @@ export default {
         text-align: center;
         background: #00D4C4;
         .title {
+            font-family: 'Orbitron', sans-serif;
             font-size: 80px;
             margin-bottom: 20px;
             color: #444;
         }
 
         .description {
+            
             font-size: 24px;
         }
     }

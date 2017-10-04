@@ -122,7 +122,6 @@ export default {
         transition: 0.3s;
         overflow: hidden;
         margin-bottom: 12px;
-        // background: #ececec;
         
         .checkbox {
             position: absolute;
@@ -198,11 +197,8 @@ export default {
         }
 
         &:hover {
-            // background: #ececec;
-            // background: #fff;
             .task-editor {
                 input {
-                    // background: #ececec;
                 }
             }
             .task-remove-btn {

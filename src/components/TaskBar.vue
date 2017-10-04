@@ -1,10 +1,10 @@
 <template>
     <header class="task-bar">
         <div class="task-bar-wrapper">
-            <div class="task-bar-btns">
-                <div class="btn" @click="selectNav('all')" :class="{ active: navSelector == 'all'}">All</div>
-                <div class="btn" @click="selectNav('active')" :class="{ active: navSelector == 'active'}">Active</div>
-                <div class="btn" @click="selectNav('completed')" :class="{ active: navSelector == 'completed'}">Completed</div>
+            <div class="task-bar-btns" :class="navSelector">
+                <div class="btn all" @click="selectNav('all')" :class="{ active: navSelector == 'all'}">All</div>
+                <div class="btn ac" @click="selectNav('active')" :class="{ active: navSelector == 'active'}">Active</div>
+                <div class="btn cp" @click="selectNav('completed')" :class="{ active: navSelector == 'completed'}">Completed</div>
             </div>
             <div class="task-state">
                 {{ left }}
@@ -76,6 +76,11 @@ export default {
                     border-right-color: #d1dbe5;
                     border-left-color: #d1dbe5;
                     color: #24BABC;
+                }
+            }
+            &.completed{
+                .cp{
+                    color:#E85B48;
                 }
             }
         }
