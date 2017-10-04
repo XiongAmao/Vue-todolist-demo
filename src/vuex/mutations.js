@@ -6,6 +6,7 @@ import {
     LOGOUT,
     TOGGLE_LOGIN_VIEW,
     SET_LOGIN_ERRORMESSAGE,
+    SET_TODONAV_SELECTOR,
 } from './mutation-types.js'
 
 export default {
@@ -42,5 +43,8 @@ export default {
     },
     [SET_LOGIN_ERRORMESSAGE](state, payload) {
         
+    },
+    [SET_TODONAV_SELECTOR](state, payload) {
+        state.navSelector = payload
     }
 }

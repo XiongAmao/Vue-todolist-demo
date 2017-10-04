@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
-import TodoList from '@/components/TodoList'
+import Todo from '@/components/Todo'
 
 Vue.use(Router)
 const routes = [
@@ -12,8 +12,8 @@ const routes = [
         alias: '/'
     }, {
         path: '/todo',
-        name: 'TodoList',
-        component: TodoList
+        name: 'Todo',
+        component: Todo
     }
 ]
 const beforeEach = function(to,from,next){

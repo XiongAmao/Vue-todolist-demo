@@ -1,5 +1,5 @@
 <template>
-    <transition name="homepage-fade">
+    <!-- <transition name="homepage-fade"> -->
         <div class="homepage">
             <vue-particles  class="particles" color="#dedede"
             :particleOpacity="0.7"
@@ -34,7 +34,7 @@
             </div>
             
         </div>
-    </transition>
+    <!-- </transition> -->
 </template>
 
 <script>
@@ -67,7 +67,8 @@ export default {
 
 <style lang="scss" >
 .homepage {
-    height: 100vh;
+    // overflow: hidden;
+    height: calc(100vh);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -80,7 +81,6 @@ export default {
         justify-content: center;
         height: 500px;
         width: 800px;
-        // border: 1px solid rgba(0,0,0,0.5);
         border-radius: 8px;
         box-shadow: 0 7px 20px 0px rgba(0, 0, 0, 0.3);
     }
@@ -132,9 +132,9 @@ export default {
     z-index: 0;
     width: 100%;
     height: 100%;
-    // background-color: #355C7D;
-    // background-repeat: no-repeat;
-    // background-size: cover;
     background-position: 50% 50%;
+    canvas{
+        display: block;
+    }
 }
 </style>

@@ -1,47 +1,92 @@
 <template>
-    <section class="task-bar">
-        <!-- <button @click="saveTodo" class="save-todo">保存</button> -->
-        <div class="task-bar-btns">
-            <Button @click="saveTodo" icon="checkmark-circled">保存</Button>
-            <Button @click="removeFinishedTodo" icon="trash-a">清理所有已完成</Button>
+    <header class="task-bar">
+        <div class="task-bar-wrapper">
+            <div class="task-bar-btns">
+                <div class="btn" @click="selectNav('all')" :class="{ active: navSelector == 'all'}">All</div>
+                <div class="btn" @click="selectNav('active')" :class="{ active: navSelector == 'active'}">Active</div>
+                <div class="btn" @click="selectNav('completed')" :class="{ active: navSelector == 'completed'}">Completed</div>
+            </div>
+            <div class="task-state">
+                {{ left }}
+                <span>item left</span>
+            </div>
         </div>
-        <div class="task-state-sort">
-            <Select style="width:200px">
-                <Option v-for="item in sortList" :value="item.value" :key="item.value">{{ item.label }}</Option>
-            </Select>
-        </div>
-    </section>
+    </header>
 </template>
 
 <script>
 export default {
     data() {
         return {
-            sortList: [{
-                value: 'createdTime',
-                label: '创建时间'
-            }],
-            sortSelector: "",
+            left: 123,
         }
     },
     methods: {
-        saveTodo: function () {
+        selectNav: function(choice) {
+            this.$store.commit('SET_TODONAV_SELECTOR', choice) 
+         },
+        saveTodo: function() {
             this.$store.commit('saveTodoList')
         },
-        removeFinishedTodo: function () {
+        removeFinishedTodo: function() {
             this.$store.commit('removeFinishedTodo')
         }
     },
-    computed: {},
+    computed: {
+        navSelector: function(){
+            return this.$store.state.navSelector
+        }
+    },
 }
 </script>
 
 <style lang="scss" scoped>
 .task-bar {
-    /* todo-action-bar */
-    margin-top: 16px;
-    display: flex;
-    justify-content: space-between;
-    font-size: 16px; // span{font-size: 16px;}
+    border-bottom: 1px solid #d1dbe5;
+    background-color: #eef1f6;
+    .task-bar-wrapper {
+        display: flex;
+        justify-content: space-between;
+        font-size: 16px;
+        overflow: hidden;
+        margin-bottom: -1px;
+        position: relative;
+        -webkit-font-smoothing: antialiased;
+        margin-bottom: -1px;
+        .task-bar-btns {
+            .btn {
+                display: inline-block;
+                transition: all .3s cubic-bezier(.645, .045, .355, 1);
+                border: 1px solid transparent;
+                border-top: 0;
+                margin-right: -1px;
+                margin-left: -1px;
+                padding: 0 16px;
+                height: 42px;
+                box-sizing: border-box;
+                line-height: 42px;
+                display: inline-block;
+                list-style: none;
+                font-size: 14px;
+                color: #8391a5;
+                position: relative;
+                cursor: pointer;
+                &.active {
+                    background-color: #fff;
+                    border-right-color: #d1dbe5;
+                    border-left-color: #d1dbe5;
+                    color: #24BABC;
+                }
+            }
+        }
+        .task-state {
+            padding: 12px;
+            color: #8391a5;
+            font-weight: 700;
+            span {
+                font-weight: 400;
+            }
+        }
+    }
 }
 </style>

@@ -2,8 +2,17 @@
     <section class="task-list">
         <ol>
             <li class="task-item" :class="{ finished: todo.done, editing: todo == editedTodo }" v-for="( todo, index ) in todoList" :key="index">
-
-                <input class="checkbox" type="checkbox" v-model="todo.done">
+                
+                <div class="checkbox" @click="todoDone(todo)">
+                    <input class="checkbox-input" type="checkbox" v-model="todo.done">
+                    <svg v-show="!todo.done" class="icon icon-no-selected">
+                        <use xlink:href="#icon-rect"></use>
+                    </svg>
+                    <svg v-show="todo.done" class="icon icon-selected">
+                        <use xlink:href="#icon-rect-selected"></use>
+                    </svg>
+                </div> 
+                
                 <label class="content" @dblclick="editTodo(todo)">
                     <span>{{todo.todoContent}}</span>
                 </label>
@@ -67,6 +76,9 @@ export default {
         cancelEdit: function(todo) {
             console.log('cancel')
             this.editedTodo = nul
+        },
+        todoDone: function(todo) {
+            todo.done = !todo.done
         }
     },
     computed: {
@@ -96,7 +108,7 @@ export default {
 <style lang="scss" scoped>
 .task-list {
     /* todo-list */
-    padding: 20px 0;
+    padding: 20px;
 
     .task-item {
         height: 48px;
@@ -114,17 +126,32 @@ export default {
         
         .checkbox {
             position: absolute;
-            top: 2px;
+            top: 0;
             height: 100%;
-            width: 16px;
-            padding-top: 16px;
-            display: block;
+            width: 20px;
+            padding-top: 2px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .checkbox-input{
+                opacity: 0;
+                position: absolute;
+                top:0;
+                outline: none;
+            }
+            .icon{
+                cursor: pointer;
+                width:20px;
+                height:20px;
+                
+            }
+            
         }
         .content {
-            cursor: text;
             display: block;
             width: 100%;
             padding: 0 0 0 24px;
+            margin-left: 4px;
         }
 
         .task-info {
@@ -143,13 +170,14 @@ export default {
             width: calc(100% - 34px);
             display: none;
             transition: 0.3s ;
-            // border:1px solid #999;
+            
             input {
                 transition: 0.3s ;
                 width: 100%;
                 border: none;
                 outline: none;
                 text-decoration: underline;
+                margin-left: 4px;
             }
         }
 

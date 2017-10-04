@@ -7,4 +7,5 @@ export default {
     email:'',
     username:'',
     loginPanelView:'Login',
+    navSelector:'all'
 }
