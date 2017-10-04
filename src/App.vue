@@ -14,7 +14,11 @@ export default {
   name: 'app',
   data() {
     return {}
+  },
+  created:function(){
+    this.$store.dispatch('checkUser') 
   }
+
 }
 </script>
 

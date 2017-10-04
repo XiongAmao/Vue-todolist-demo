@@ -40,13 +40,13 @@ export default {
     },
     methods:{
         logout: function(){
-
+            this.$store.dispatch('logout')
+            this.$router.push('/login')
         }
     },
     computed: {
         loggedUser: function() {
-            // return this.$store.state.user
-            return 'Kuma'
+            return this.$store.state.user.username
         }
     },
     created: function() {
@@ -57,7 +57,13 @@ export default {
     },
     beforeRouteEnter(to, from, next) {
         console.log('beaforeRouteEnter ,in Todo List node')
+        // var user = this.$store.state.user
+        // if(!user){
+        //     next('/')
+        // } 
         next()
+        
+        
     },
 
 }

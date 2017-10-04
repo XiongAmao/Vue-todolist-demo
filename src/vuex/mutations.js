@@ -34,7 +34,6 @@ export default {
         })
     },
     [SET_USER](state, user) {
-        console.log('mutate set uesr')
         state.user = user
     },
     [LOGIN](state, user) {

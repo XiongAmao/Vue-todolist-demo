@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
 import Todo from '@/components/Todo'
+import AV from '../vuex/leancloud'
+
 
 Vue.use(Router)
 const routes = [
@@ -9,27 +11,39 @@ const routes = [
         path: '/login',
         name: 'Login',
         component: Home,
-        alias: '/'
+        alias: '/',
+        beforeEnter: (to, from, next) => {
+            var user = AV.User.current()
+            if (user) {
+                next('/todo')
+            }
+            next()
+        }
     }, {
         path: '/todo',
         name: 'Todo',
-        component: Todo
+        component: Todo,
+        beforeEnter: (to, from, next) => {
+            var user = AV.User.current()
+            if (!user) {
+                next('/login')
+            }
+            next()
+        }
     }
 ]
-const beforeEach = function(to,from,next){
-    next()
-    if (!to.name) next('Login')
-}
+
 const router = new Router({
     routes,
-    // mode:'history'
-    // 如果需要开启HTML5 history模式需要后端支持，当匹配不到资源时返回index.html
 })
 
 router.beforeEach((to, from, next) => {
+    var user = AV.User.current()
     next()
-    if (!to.name) next('Login')
-    // if router-name err , go to login
+    if (!user) {
+        next('/login')
+    }
+    if (!to.name) next('/Login')
 })
 
 export default router 

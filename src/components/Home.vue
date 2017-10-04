@@ -58,11 +58,22 @@ export default {
     computed: {
         loginView: function() {
             return this.$store.state.loginPanelView
-        }
+        },
+        user: function() {
+            return this.$store.state.user
+        },
     },
-    mounted: function() {
+    watch: {
+        'user':function() {
+            if(this.$store.state.user){
+                this.$router.push('/todo')
+            }
+        }
     }
-
+    // beforeRouteEnter: (to, from, next) => {
+    //     console.log('in component Home.vue enter')
+    //     next()
+    // }
 }
 </script>
 
