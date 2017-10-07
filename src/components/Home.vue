@@ -61,9 +61,12 @@ export default {
     },
     watch: {
         // 监听用户是否登录
-        'user':function() {
-            if(this.$store.state.user){
-                this.$router.push('/todo')
+        'user':{
+            handler:function(user){
+                if(this.$store.state.user){
+                    this.$router.push('/todo')
+                    this.$store.dispatch('fetchTodos')
+                }
             }
         }
     }

@@ -1,23 +1,40 @@
 import {
+    // todos
+    FECTH_TODOS,
     ADD_TODO,
     REMOVE_TODO,
     UPDATE_TODOS,
-    SET_USER,
+    REMOVE_COMPLETED_TODOS,
+
+    // user  
     LOGIN,
     LOGOUT,
-    TOGGLE_LOGIN_VIEW,
+    SET_USER,
     SET_ERRORMESSAGE,
     RESET_ERRORMESSAGE,
+
+    // view 
+    TOGGLE_LOGIN_VIEW,
     SET_TODONAV_SELECTOR,
 } from './mutation-types.js'
 
 export default {
     [ADD_TODO](state, payload) {
-        state.todoList.push(payload)
+        state.todos.push(payload)
     },
     [REMOVE_TODO](state, payload) {
         let index = state.todoList.indexOf(payload)
         state.todoList.splice(index, 1)
+    },
+    [UPDATE_TODOS](state, todos) {
+        state.todos = todos.map(function (todo) {
+            return todo.toJSON()
+        })
+    },
+    [REMOVE_COMPLETED_TODOS](state){
+        state.todos = state.todos.filter(function(todo){
+            return !todo.done
+        })
     },
     saveTodoList(state) {
         let dataString = JSON.stringify(state.todoList)
@@ -33,6 +50,7 @@ export default {
             return !elem.done
         })
     },
+    // Home component
     [SET_USER](state, user) {
         state.user = user
     },
@@ -42,19 +60,21 @@ export default {
     [LOGOUT](state) {
         state.user = null
     },
-    [TOGGLE_LOGIN_VIEW](state, choice) {
-        state.loginPanelView = choice ? choice : 'Login'
-    },
+    // error msg
     [SET_ERRORMESSAGE](state, msg) {
         console.log('mutate set error msg')
         state.errorMsg = msg
         state.errorMsgState = true
     },
-    [RESET_ERRORMESSAGE](state) { 
+    [RESET_ERRORMESSAGE](state) {
         state.errorMsg = ''
         state.errorMsgState = false
     },
+    // view controlor
     [SET_TODONAV_SELECTOR](state, payload) {
         state.navSelector = payload
-    }
+    },
+    [TOGGLE_LOGIN_VIEW](state, choice) {
+        state.loginPanelView = choice ? choice : 'Login'
+    },
 }

@@ -15,25 +15,14 @@ export default {
     data() {
         return {
             newTodo: '',
-            sortList: [{
-                value: 'createdTime',
-                label: '创建时间'
-            }],
-            sortSelector: "",
         }
     },
     methods: {
         addTodo: function () {
-            if (this.newTodo) {
-                let obj = {
-                    todoContent: this.newTodo,
-                    createdAt: new Date(),
-                    done: false,
-                    editorActive:false
-                }
-                this.$store.commit('ADD_TODO', obj)
-                this.newTodo = ""
-                this.$store.commit('saveTodoList')
+            var content = this.newTodo && this.newTodo.trim()
+            if(content){
+                this.$store.dispatch('addTodo', content)
+                this.newTodo = ''
             }
         },
     },

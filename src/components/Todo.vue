@@ -52,15 +52,8 @@ export default {
         }
     },
     created: function() {
-        window.onbeforeunload = () => {
-            this.$store.commit('saveTodoList')
-        }
-        this.$store.commit('getLocalTodoList')
+        
     },
-    // beforeRouteEnter(to, from, next) {
-    //     console.log('beaforeRouteEnter ,in Todo List node')
-    //     next()
-    // },
 
 }
 </script>

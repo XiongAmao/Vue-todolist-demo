@@ -165,6 +165,7 @@ export default {
                 text-align: center;
                 color: #aaa;
                 transition: .3s ease-out;
+                user-select: none;
             }
             .password-hidden-btn {
                 position: absolute;
