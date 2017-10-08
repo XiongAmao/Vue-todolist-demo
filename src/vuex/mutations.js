@@ -8,6 +8,7 @@ import {
     ADD_TODO,
     REMOVE_TODO,
     EDIT_TODO,
+    FINISH_TODO,
     // user  
     LOGIN,
     LOGOUT,
@@ -44,6 +45,9 @@ export default {
     [EDIT_TODO](state, todo){
          
     },
+    [FINISH_TODO](state, todo){
+        todo.done = !todo.done
+    },
 
     // Home component
     [SET_USER](state, user) {
@@ -54,6 +58,7 @@ export default {
     },
     [LOGOUT](state) {
         state.user = null
+        
     },
     // error msg
     [SET_ERRORMESSAGE](state, msg) {

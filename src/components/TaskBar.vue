@@ -18,7 +18,7 @@
 export default {
     data() {
         return {
-            left: 123,
+            
         }
     },
     methods: {
@@ -35,6 +35,9 @@ export default {
     computed: {
         navSelector: function(){
             return this.$store.state.navSelector
+        },
+        left: function(){
+            return this.$store.getters.leftTodosCount
         }
     },
 }

@@ -5,6 +5,7 @@ export const REMOVE_COMPLETED_TODOS = 'REMOVE_COMPLETED_TODOS'
 export const ADD_TODO = 'ADD_TODO'
 export const REMOVE_TODO = 'REMOVE_TODO'
 export const EDIT_TODO = 'EDIT_TODO' 
+export const FINISH_TODO = 'FINISH_TODO'
 // user modal
 export const LOGIN = 'LOGIN'
 export const LOGOUT = 'LOGOUT'

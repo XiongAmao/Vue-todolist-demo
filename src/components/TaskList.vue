@@ -3,12 +3,12 @@
         <ol>
             <li class="task-item" :class="{ finished: todo.done, editing: todo == editedTodo }" v-for="todo in todos" :key="todo.objectId">
                 
-                <div class="checkbox" @click="todoDone(todo)">
+                <div class="checkbox">
                     <input class="checkbox-input" type="checkbox" v-model="todo.done">
-                    <svg v-show="!todo.done" class="icon icon-no-selected">
+                    <svg v-show="!todo.done" class="icon icon-no-selected" @click="todoDone(todo)">
                         <use xlink:href="#icon-rect"></use>
                     </svg>
-                    <svg v-show="todo.done" class="icon icon-selected">
+                    <svg v-show="todo.done" class="icon icon-selected" @click="todoDone(todo)">
                         <use xlink:href="#icon-rect-selected"></use>
                     </svg>
                 </div> 
@@ -26,7 +26,7 @@
                     @keyup.esc="cancelEdit(todo)">
                 </div>
 
-                <button class="task-remove-btn" @click="removeSingleTodo(todo)">
+                <button class="task-remove-btn" @click="removeTodo(todo)">
                     <svg class="icon icon-input">
                         <use xlink:href="#icon-close"></use>
                     </svg>
@@ -62,12 +62,9 @@ export default {
     },
     created: function() { },
     methods: {
-        removeSingleTodo: function(todo) {
-            this.$store.commit('REMOVE_TODO', todo)
+        removeTodo: function(todo) {
+            this.$store.dispatch('removeTodo', todo)
             // delete "1" element from index to end 
-        },
-        saveTodo: function() {
-            this.$store.commit('saveTodoList')
         },
         editTodo: function(todo) {
             this.beforeEditCache = this.editingTodo = todo.todoContent
@@ -75,18 +72,19 @@ export default {
             
         },
         doneEdit: function(todo) {
+            
             let editingTodo = this.editingTodo
-            this.$store.dispatch('doneEdit',{
-                todo,
-                editingTodo
-            }) 
+            // this.$store.dispatch('doneEdit',{
+            //     todo,
+            //     editingTodo
+            // }) 
         },
         cancelEdit: function(todo) {
             console.log('cancel')
             this.editedTodo = null
         },
         todoDone: function(todo) {
-            todo.done = !todo.done
+            this.$store.dispatch('finishTodo', todo) 
         }
     },
     computed: {

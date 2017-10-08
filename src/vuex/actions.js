@@ -82,18 +82,23 @@ export default {
             commit('REMOVE_COMPLETED_TODOS')
         }).catch(errorAlert)
     },
-    doneEdit({ commit, state }, { todo, content }) {
-        console.log(todo, content)
-        // AV.Object.createWithoutData('Todo', todo.objectId).save({
-        //     content: todo.content,
-        //     done: todo.done
-        // }).then(()=>{
-        //     commit()
-        // })
-        // .catch(errorAlert)
-        // if (!todo.content) {
-        //     this.removeTodo(todo)
-        // }
+    doneEdit({ commit, state }, todo ) {
+        AV.Object.createWithoutData('Todo', todo.objectId).save({
+            content: todo.content,
+        }).then(()=>{
+            commit('EDIT_TODO',todo)
+        })
+        .catch(errorAlert)
+        if (!todo.content) {
+            this.removeTodo(todo)
+        }
+    },
+    finishTodo({ commit }, todo){
+        AV.Object.createWithoutData('Todo', todo.objectId).save({
+            done: !todo.done
+        }).then(()=>{
+            commit('FINISH_TODO',todo)
+        }).catch(errorAlert)
     }
 
 }
