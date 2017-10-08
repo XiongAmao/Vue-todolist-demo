@@ -1,7 +1,7 @@
 <template>
     <div class="signup">
         <h1>Sign Up</h1>
-        <form class="form">
+        <form class="form" v-on:submit.prevent="login">
             <div class="form-item" :class="{ filled: emailFilled }">
                 <svg class="icon" aria-hidden="true">
                     <use xlink:href="#icon-email"></use>

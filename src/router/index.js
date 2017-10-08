@@ -38,7 +38,6 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-    var user = AV.User.current()
     next()
     if (!to.name) next('/Login')
 })

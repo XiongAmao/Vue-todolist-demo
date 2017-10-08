@@ -1,7 +1,7 @@
 <template>
     <div class="login">
         <h1>Log In</h1>
-        <form class="form">
+        <form class="form" v-on:submit.prevent="login">
             <!-- Username item -->
             <div class="form-item" :class="{ filled: usernameFilled }">
                 <svg class="icon" aria-hidden="true">

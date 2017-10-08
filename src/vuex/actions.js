@@ -14,7 +14,6 @@ export default {
     login({ dispatch, commit, state }, { username, password, cb }) {
         AV.User.logIn(username, username).then((user) => {
             commit('LOGIN', user.toJSON())
-            dispatch('checkUser')
         }).catch((error) => {
             let msg = getErrorMessage(error.code)
             commit('SET_ERRORMESSAGE', msg)
@@ -26,8 +25,7 @@ export default {
         user.setPassword(password);
         user.setEmail(email);
         user.signUp().then(function (user) {
-            commit('SET_USER', user.toJSON())
-            dispatch('checkUser')
+            commit('LOGIN', user.toJSON())
         }).catch((error) => {
             commit('SET_ERRORMESSAGE', msg)
         })
