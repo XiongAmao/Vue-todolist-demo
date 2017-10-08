@@ -65,7 +65,7 @@ export default {
             }).catch(errorAlert)
     },
     fetchTodos({ commit, state }) {
-        if(!state.user.objectId) return
+        if (!state.user.objectId) return
         let queryUser = AV.Object.createWithoutData('User', state.user.objectId)
         const query = new AV.Query(Todo)
             .equalTo('user', queryUser)
@@ -82,22 +82,22 @@ export default {
             commit('REMOVE_COMPLETED_TODOS')
         }).catch(errorAlert)
     },
-    doneEdit({ commit, state }, todo ) {
-        AV.Object.createWithoutData('Todo', todo.objectId).save({
-            content: todo.content,
-        }).then(()=>{
-            commit('EDIT_TODO',todo)
-        })
-        .catch(errorAlert)
-        if (!todo.content) {
-            this.removeTodo(todo)
+    doneEdit({ commit, dispatch, state }, { todo, content }) {
+        if (!content) {
+            dispatch('removeTodo', todo)
+        } else {
+            AV.Object.createWithoutData('Todo', todo.objectId).save({
+                content: content,
+            }).then(() => {
+                commit('EDIT_TODO', { todo, content })
+            }).catch(errorAlert)
         }
     },
-    finishTodo({ commit }, todo){
+    finishTodo({ commit }, todo) {
         AV.Object.createWithoutData('Todo', todo.objectId).save({
             done: !todo.done
-        }).then(()=>{
-            commit('FINISH_TODO',todo)
+        }).then(() => {
+            commit('FINISH_TODO', todo)
         }).catch(errorAlert)
     }
 

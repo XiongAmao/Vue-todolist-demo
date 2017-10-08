@@ -42,10 +42,10 @@ export default {
         let index = state.todos.indexOf(todo)
         state.todos.splice(index, 1)
     },
-    [EDIT_TODO](state, todo){
-         
+    [EDIT_TODO](state, { todo, content }) {
+        todo.content =  content
     },
-    [FINISH_TODO](state, todo){
+    [FINISH_TODO](state, todo) {
         todo.done = !todo.done
     },
 
@@ -58,7 +58,7 @@ export default {
     },
     [LOGOUT](state) {
         state.user = null
-        
+
     },
     // error msg
     [SET_ERRORMESSAGE](state, msg) {

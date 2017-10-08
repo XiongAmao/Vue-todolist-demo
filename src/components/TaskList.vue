@@ -56,28 +56,21 @@ export default {
     data() {
         return {
             editedTodo: null,
-            beforeEditCache: '',
             editingTodo:''
         }
     },
-    created: function() { },
     methods: {
         removeTodo: function(todo) {
             this.$store.dispatch('removeTodo', todo)
-            // delete "1" element from index to end 
         },
         editTodo: function(todo) {
-            this.beforeEditCache = this.editingTodo = todo.todoContent
+            this.editingTodo = todo.content
             this.editedTodo = todo
-            
         },
         doneEdit: function(todo) {
-            
-            let editingTodo = this.editingTodo
-            // this.$store.dispatch('doneEdit',{
-            //     todo,
-            //     editingTodo
-            // }) 
+            let content = this.editingTodo
+            this.$store.dispatch('doneEdit', {todo , content })
+            this.editedTodo = null // 解除focus
         },
         cancelEdit: function(todo) {
             console.log('cancel')
