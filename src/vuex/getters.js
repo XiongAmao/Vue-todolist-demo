@@ -7,5 +7,5 @@ export default {
     },
     leftTodosCount: (state, getters) => {
         return getters.activeTodos.length
-    }
+    },
 }

@@ -22,7 +22,16 @@
         <div class="todo-wrapper">
             <TaskBar></TaskBar>
             <TaskList></TaskList>
-            <div class="todo-intro">Double-click to edit a todo</div>
+            <footer>
+                <div class="todo-clear">
+                    <transition name="fade">
+                        <div class="clear-btn" v-if="completedTodosLength > 0" @click="removeCompleted">Clear completed</div>
+                    </transition>
+                    
+                </div>
+                <div class="todo-intro">Double-click to edit a todo</div>
+            </footer>
+
         </div>
     </div>
 </template>
@@ -31,6 +40,7 @@
 import NewTasks from "./NewTasks"
 import TaskList from "./TaskList"
 import TaskBar from "./TaskBar"
+
 export default {
     components: {
         NewTasks,
@@ -44,15 +54,21 @@ export default {
         logout: function() {
             this.$store.dispatch('logout')
             this.$router.push('/login')
+        },
+        removeCompleted: function() {
+            this.$store.dispatch('removeCompleted')
         }
     },
     computed: {
         loggedUser: function() {
             return this.$store.state.user.username
+        },
+        completedTodosLength: function() {
+            return this.$store.getters.completedTodos.length
         }
     },
     created: function() {
-        this.$store.dispatch('fetchTodos') 
+        this.$store.dispatch('fetchTodos')
     },
 
 }
@@ -101,12 +117,19 @@ export default {
                 }
             }
         }
-        .todo-intro {
-            // font-family: 'Orbitron', sans-serif;
-            position: absolute;
-            bottom: 10px;
-            right: 20px;
+        footer {
+            display: flex;
+            justify-content: space-between;
+            padding: 0 22px;
             color: #999;
+            .todo-clear {
+                .clear-btn {
+                    cursor: pointer; // font-family: 'Orbitron', sans-serif;
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
         }
     }
 }

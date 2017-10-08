@@ -36,7 +36,7 @@ export default {
 
     // TODO
     [ADD_TODO](state, todo) {
-        state.todos.push(todo)
+        state.todos.unshift(todo)
     },
     [REMOVE_TODO](state, todo) {
         let index = state.todos.indexOf(todo)
