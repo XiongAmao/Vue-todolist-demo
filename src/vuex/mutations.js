@@ -1,11 +1,13 @@
 import {
-    // todos
-    FECTH_TODOS,
-    ADD_TODO,
-    REMOVE_TODO,
+    // TODOS
+    // FECTH_TODOS,
     UPDATE_TODOS,
     REMOVE_COMPLETED_TODOS,
 
+    // TODO
+    ADD_TODO,
+    REMOVE_TODO,
+    EDIT_TODO,
     // user  
     LOGIN,
     LOGOUT,
@@ -19,37 +21,30 @@ import {
 } from './mutation-types.js'
 
 export default {
-    [ADD_TODO](state, payload) {
-        state.todos.push(payload)
-    },
-    [REMOVE_TODO](state, payload) {
-        let index = state.todoList.indexOf(payload)
-        state.todoList.splice(index, 1)
+    // TODOS
+    [REMOVE_COMPLETED_TODOS](state) {
+        state.todos = state.todos.filter(function (todo) {
+            return !todo.done
+        })
     },
     [UPDATE_TODOS](state, todos) {
         state.todos = todos.map(function (todo) {
             return todo.toJSON()
         })
     },
-    [REMOVE_COMPLETED_TODOS](state){
-        state.todos = state.todos.filter(function(todo){
-            return !todo.done
-        })
+
+    // TODO
+    [ADD_TODO](state, todo) {
+        state.todos.push(todo)
     },
-    saveTodoList(state) {
-        let dataString = JSON.stringify(state.todoList)
-        window.localStorage.setItem('myTodos', dataString)
+    [REMOVE_TODO](state, todo) {
+        let index = state.todos.indexOf(todo)
+        state.todos.splice(index, 1)
     },
-    getLocalTodoList(state) {
-        let oldDataString = window.localStorage.getItem('myTodos')
-        let oldData = JSON.parse(oldDataString)
-        state.todoList = oldData || []
+    [EDIT_TODO](state, todo){
+         
     },
-    removeFinishedTodo(state) {
-        state.todoList = state.todoList.filter(function (elem) {
-            return !elem.done
-        })
-    },
+
     // Home component
     [SET_USER](state, user) {
         state.user = user

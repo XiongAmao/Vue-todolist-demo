@@ -52,7 +52,7 @@ export default {
         }
     },
     created: function() {
-        
+        this.$store.dispatch('fetchTodos') 
     },
 
 }

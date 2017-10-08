@@ -1,7 +1,7 @@
 <template>
     <section class="task-list">
         <ol>
-            <li class="task-item" :class="{ finished: todo.done, editing: todo == editedTodo }" v-for="( todo, index ) in todoList" :key="index">
+            <li class="task-item" :class="{ finished: todo.done, editing: todo == editedTodo }" v-for="todo in todos" :key="todo.objectId">
                 
                 <div class="checkbox" @click="todoDone(todo)">
                     <input class="checkbox-input" type="checkbox" v-model="todo.done">
@@ -14,7 +14,7 @@
                 </div> 
                 
                 <label class="content" @dblclick="editTodo(todo)">
-                    <span>{{todo.todoContent}}</span>
+                    <span>{{todo.content}}</span>
                 </label>
 
                 <div class="task-editor">
@@ -41,14 +41,20 @@
 </template>
 
 <script>
+
+var todosSeletor = function(selector, ctx) {
+    console.log(selector)
+    if(selector === 'all'){
+        return ctx.$store.state.todos
+    }else if(selector === 'active'){
+        return ctx.$store.getters.activeTodos
+    }else if(selector === 'completed'){
+        return ctx.$store.getters.completedTodos
+    }
+}
 export default {
     data() {
         return {
-            sortList: [{
-                value: 'createdTime',
-                label: '创建时间'
-            }],
-            sortSelector: "",
             editedTodo: null,
             beforeEditCache: '',
             editingTodo:''
@@ -64,36 +70,35 @@ export default {
             this.$store.commit('saveTodoList')
         },
         editTodo: function(todo) {
-            console.log(1)
             this.beforeEditCache = this.editingTodo = todo.todoContent
             this.editedTodo = todo
             
         },
         doneEdit: function(todo) {
-            console.log('done')
-            this.editedTodo = null
+            let editingTodo = this.editingTodo
+            this.$store.dispatch('doneEdit',{
+                todo,
+                editingTodo
+            }) 
         },
         cancelEdit: function(todo) {
             console.log('cancel')
-            this.editedTodo = nul
+            this.editedTodo = null
         },
         todoDone: function(todo) {
             todo.done = !todo.done
         }
     },
     computed: {
-        todoList() {
-            return this.$store.state.todoList
+        todos() {
+            return todosSeletor(this.navSelector, this)
+        },
+        navSelector(){
+            return this.$store.state.navSelector
         }
     },
-    filters: {
-        formateDate: function(value) {
-            let date = new Date((value || ""))
-            let month = date.getMonth() + 1,
-                day = date.getDate(),
-                year = date.getFullYear()
-            return `${year}年${month}月${day}日`
-        }
+    watch:{
+        
     },
     directives: {
         'todo-focus': function(el, value) {

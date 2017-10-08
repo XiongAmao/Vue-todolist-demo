@@ -65,14 +65,15 @@ export default {
             }).catch(errorAlert)
     },
     fetchTodos({ commit, state }) {
+        if(!state.user.objectId) return
         let queryUser = AV.Object.createWithoutData('User', state.user.objectId)
         const query = new AV.Query(Todo)
             .equalTo('user', queryUser)
             .descending('createdAt')
-
-        query.find().then((todos) => {
-            commit('UPDATE_TODOS', todos)
-        }).catch(errorAlert)
+            .find()
+            .then((todos) => {
+                commit('UPDATE_TODOS', todos)
+            }).catch(errorAlert)
     },
     removeCompleted({ commit, getters }) {
         AV.Object.destroyAll(getters.completedTodos.map(function (todo) {
@@ -80,5 +81,19 @@ export default {
         })).then(function () {
             commit('REMOVE_COMPLETED_TODOS')
         }).catch(errorAlert)
+    },
+    doneEdit({ commit, state }, { todo, content }) {
+        console.log(todo, content)
+        // AV.Object.createWithoutData('Todo', todo.objectId).save({
+        //     content: todo.content,
+        //     done: todo.done
+        // }).then(()=>{
+        //     commit()
+        // })
+        // .catch(errorAlert)
+        // if (!todo.content) {
+        //     this.removeTodo(todo)
+        // }
     }
+
 }

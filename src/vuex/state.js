@@ -3,8 +3,6 @@ import AV from './leancloud'
 export default {
     todoList: [],
     todos: [],
-    subscription: null,
-    unbind:null,
     // user 
     user: null,
     password: '',
