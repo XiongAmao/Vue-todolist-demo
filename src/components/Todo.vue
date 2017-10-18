@@ -40,6 +40,7 @@
 import NewTasks from "./NewTasks"
 import TaskList from "./TaskList"
 import TaskBar from "./TaskBar"
+import _throttle from 'lodash/throttle'
 
 export default {
     components: {
@@ -55,9 +56,9 @@ export default {
             this.$store.dispatch('logout')
             this.$router.push('/login')
         },
-        removeCompleted: function() {
+        removeCompleted: _throttle(function() {
             this.$store.dispatch('removeCompleted')
-        }
+        }, 300)
     },
     computed: {
         loggedUser: function() {
@@ -94,7 +95,7 @@ export default {
         padding-bottom: 20px;
         @media screen and (max-width: 768px) {
             border-radius: 0;
-            padding:0;
+            padding: 0;
             &:first-child {
                 margin-top: 0;
             }
@@ -132,7 +133,7 @@ export default {
             justify-content: space-between;
             padding: 0 22px;
             color: #999;
-            @media screen and (max-width: 768px){
+            @media screen and (max-width: 768px) {
                 font-size: 14px;
                 padding-bottom: 20px;
             }
@@ -142,7 +143,7 @@ export default {
                     &:hover {
                         text-decoration: underline;
                     }
-                    @media screen and (max-width: 768px){
+                    @media screen and (max-width: 768px) {
                         // border: 1px solid #999;
                         // padding:4px;
                         // border-radius: 6px;
@@ -150,12 +151,11 @@ export default {
                     }
                 }
             }
-            .todo-intro{
-                @media screen and (max-width: 768px){
+            .todo-intro {
+                @media screen and (max-width: 768px) {
                     display: none;
                 }
             }
-            
         }
     }
 }

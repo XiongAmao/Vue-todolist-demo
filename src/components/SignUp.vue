@@ -3,12 +3,12 @@
         <h1>Sign Up</h1>
         <form class="form" v-on:submit.prevent="signUp">
             <!-- <div class="form-item" :class="{ filled: emailFilled }">
-                <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#icon-email"></use>
-                </svg>
-                <input id="su-email" v-model="signUpForm.email" class="item-text" type="email" autocomplete="false">
-                <label for="su-email">Email</label>
-            </div> -->
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-email"></use>
+                    </svg>
+                    <input id="su-email" v-model="signUpForm.email" class="item-text" type="email" autocomplete="false">
+                    <label for="su-email">Email</label>
+                </div> -->
 
             <div class="form-item" :class="{ filled: usernameFilled }">
                 <svg class="icon" aria-hidden="true">
@@ -60,6 +60,8 @@
 </template>
 
 <script>
+import _throttle from 'lodash/throttle'
+
 export default {
     data() {
         return {
@@ -80,14 +82,14 @@ export default {
             if (!this.signUpForm.password) return
             this.showPassword = !this.showPassword
         },
-        signUp: function() {
+        signUp: _throttle(function() {
             if (!this.signUpForm.username) {
                 if (!this.signUpForm.password) {
                     return
                 }
             }
             this.$store.dispatch('signup', this.signUpForm)
-        }
+        }, 300)
     },
     computed: {
         emailFilled: function() {

@@ -49,6 +49,7 @@
 </template>
 
 <script>
+import _throttle from 'lodash/throttle'
 
 var todosSeletor = function(selector, ctx) {
     console.log(selector)
@@ -68,9 +69,9 @@ export default {
         }
     },
     methods: {
-        removeTodo: function(todo) {
+        removeTodo: _throttle(function(todo) {
             this.$store.dispatch('removeTodo', todo)
-        },
+        }, 300),
         editTodo: function(todo) {
             this.editingTodo = todo.content
             this.editedTodo = todo
@@ -84,9 +85,9 @@ export default {
             console.log('cancel')
             this.editedTodo = null
         },
-        todoDone: function(todo) {
+        todoDone: _throttle(function(todo) {
             this.$store.dispatch('finishTodo', todo) 
-        }
+        }, 300)
     },
     computed: {
         todos() {

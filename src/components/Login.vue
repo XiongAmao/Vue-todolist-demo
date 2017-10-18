@@ -55,6 +55,7 @@
     </div>
 </template>
 <script>
+import _throttle from 'lodash/throttle'
 
 export default {
     data() {
@@ -66,9 +67,6 @@ export default {
             showPassword: false,
         }
     },
-    mounted: function() {
-
-    },
     methods: {
         toggleView: function() {
             this.$store.commit('TOGGLE_LOGIN_VIEW', 'SignUp')
@@ -78,14 +76,14 @@ export default {
             if (!this.loginForm.password) return
             this.showPassword = !this.showPassword
         },
-        login: function() {
+        login: _throttle(function() {
             if (!this.loginForm.username) {
                 if (!this.loginForm.password) {
                     return
                 }
             }
             this.$store.dispatch('login', this.loginForm)
-        }
+        }, 300)
     },
     computed: {
         usernameFilled: function() {

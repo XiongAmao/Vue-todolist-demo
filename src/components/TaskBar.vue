@@ -25,12 +25,6 @@ export default {
         selectNav: function(choice) {
             this.$store.commit('SET_TODONAV_SELECTOR', choice) 
          },
-        saveTodo: function() {
-            this.$store.commit('saveTodoList')
-        },
-        removeFinishedTodo: function() {
-            this.$store.commit('removeFinishedTodo')
-        }
     },
     computed: {
         navSelector: function(){
