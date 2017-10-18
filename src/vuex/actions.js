@@ -27,6 +27,7 @@ export default {
         user.signUp().then(function (user) {
             commit('LOGIN', user.toJSON())
         }).catch((error) => {
+            let msg = getErrorMessage(error.code)
             commit('SET_ERRORMESSAGE', msg)
         })
     },

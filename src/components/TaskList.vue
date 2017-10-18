@@ -1,14 +1,22 @@
 <template>
     <section class="task-list">
         <ol>
-            <li class="task-item" :class="{ finished: todo.done, editing: todo == editedTodo }" v-for="todo in todos" :key="todo.objectId">
+            <li class="task-item" 
+            :class="{ finished: todo.done, editing: todo == editedTodo }" 
+            v-for="todo in todos" :key="todo.objectId">
                 
                 <div class="checkbox">
                     <input class="checkbox-input" type="checkbox" v-model="todo.done">
-                    <svg v-show="!todo.done" class="icon icon-no-selected" @click="todoDone(todo)">
+
+                    <svg class="icon icon-no-selected" 
+                    v-show="!todo.done" 
+                    @click="todoDone(todo)">
                         <use xlink:href="#icon-rect"></use>
                     </svg>
-                    <svg v-show="todo.done" class="icon icon-selected" @click="todoDone(todo)">
+
+                    <svg class="icon icon-selected" 
+                    v-show="todo.done" 
+                    @click="todoDone(todo)">
                         <use xlink:href="#icon-rect-selected"></use>
                     </svg>
                 </div> 
@@ -190,6 +198,9 @@ export default {
             outline: none;
             transition: .3s ease;
             cursor: pointer;
+            @media screen and (max-width: 768px){
+                opacity: 1;
+            }
         }
 
         &:hover {

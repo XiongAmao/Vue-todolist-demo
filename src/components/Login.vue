@@ -116,6 +116,9 @@ export default {
 .login-panel {
     background: #ffffff;
     padding: 10px 40px;
+    @media screen and (max-width: 768px) {
+        padding:20px;
+    }
     h1 {
         text-align: center;
         margin-bottom: 40px;

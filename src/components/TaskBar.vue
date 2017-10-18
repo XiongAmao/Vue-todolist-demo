@@ -43,7 +43,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" >
 .task-bar {
     border-bottom: 1px solid #d1dbe5;
     background-color: #eef1f6;
@@ -79,6 +79,9 @@ export default {
                     border-right-color: #d1dbe5;
                     border-left-color: #d1dbe5;
                     color: #24BABC;
+                }
+                @media screen and (max-width: 375px) {
+                    padding:0 10px;
                 }
             }
             &.completed{

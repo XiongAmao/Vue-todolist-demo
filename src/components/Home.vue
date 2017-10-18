@@ -76,11 +76,12 @@ export default {
 <style lang="scss" >
 .homepage {
     // overflow: hidden;
-    height: calc(100vh);
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
+    
     .homepage-container {
         overflow: hidden;
         position: relative;
@@ -91,6 +92,11 @@ export default {
         width: 800px;
         border-radius: 8px;
         box-shadow: 0 7px 20px 0px rgba(0, 0, 0, 0.3);
+        @media screen and (max-width: 768px) {
+            flex-direction: column-reverse;
+            height:100vh;
+            border-radius: 0;
+        }
     }
     .home-banner {
         padding: 10px;
@@ -98,21 +104,42 @@ export default {
         width: 50%;
         text-align: center;
         background: #00D4C4;
+        @media screen and ( max-width: 768px) {
+            width:100%;
+            height:20vh;
+        }
         .title {
             font-family: 'Orbitron', sans-serif;
             font-size: 80px;
             margin-bottom: 20px;
             color: #444;
+            @media screen and ( max-width: 768px) {
+                margin-bottom: 0;
+                font-size: 64px;
+            }
+            @media screen and ( max-width: 375px) {
+                margin-bottom: 0;
+                font-size: 48px;
+            }
         }
 
         .description {
-            
             font-size: 24px;
+            @media screen and ( max-width: 768px) {
+                font-size: 20px;
+            }
+            @media screen and ( max-width: 375px) {
+                font-size: 18px;
+            }
         }
     }
 
     .login-panel {
         width: 50%;
+        @media screen and (max-width: 768px) {
+            width:100%;
+            height: 80vh;
+        }
     }
 }
 
@@ -145,6 +172,9 @@ export default {
     background-position: 50% 50%;
     canvas{
         display: block;
+    }
+    @media screen and (max-width: 768px) {
+        display:none;
     }
 }
 </style>

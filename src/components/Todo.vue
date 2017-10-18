@@ -27,7 +27,7 @@
                     <transition name="fade">
                         <div class="clear-btn" v-if="completedTodosLength > 0" @click="removeCompleted">Clear completed</div>
                     </transition>
-                    
+
                 </div>
                 <div class="todo-intro">Double-click to edit a todo</div>
             </footer>
@@ -78,6 +78,9 @@ export default {
 .todo {
     padding: 40px;
     overflow: hidden;
+    @media screen and (max-width: 768px) {
+        padding:0;
+    }
     .todo-wrapper {
         overflow: hidden;
         position: relative;
@@ -89,6 +92,13 @@ export default {
         color: #2A363B;
         margin-top: 20px;
         padding-bottom: 20px;
+        @media screen and (max-width: 768px) {
+            border-radius: 0;
+            padding:0;
+            &:first-child {
+                margin-top: 0;
+            }
+        }
         .todo-header {
             font-family: 'Orbitron', sans-serif;
             margin-bottom: 20px;
@@ -122,14 +132,30 @@ export default {
             justify-content: space-between;
             padding: 0 22px;
             color: #999;
+            @media screen and (max-width: 768px){
+                font-size: 14px;
+                padding-bottom: 20px;
+            }
             .todo-clear {
                 .clear-btn {
                     cursor: pointer; // font-family: 'Orbitron', sans-serif;
                     &:hover {
                         text-decoration: underline;
                     }
+                    @media screen and (max-width: 768px){
+                        // border: 1px solid #999;
+                        // padding:4px;
+                        // border-radius: 6px;
+                        text-decoration: underline;
+                    }
                 }
             }
+            .todo-intro{
+                @media screen and (max-width: 768px){
+                    display: none;
+                }
+            }
+            
         }
     }
 }
