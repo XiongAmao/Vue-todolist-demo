@@ -1,14 +1,14 @@
 <template>
     <div class="signup">
         <h1>Sign Up</h1>
-        <form class="form" v-on:submit.prevent="login">
-            <div class="form-item" :class="{ filled: emailFilled }">
+        <form class="form" v-on:submit.prevent="signUp">
+            <!-- <div class="form-item" :class="{ filled: emailFilled }">
                 <svg class="icon" aria-hidden="true">
                     <use xlink:href="#icon-email"></use>
                 </svg>
                 <input id="su-email" v-model="signUpForm.email" class="item-text" type="email" autocomplete="false">
                 <label for="su-email">Email</label>
-            </div>
+            </div> -->
 
             <div class="form-item" :class="{ filled: usernameFilled }">
                 <svg class="icon" aria-hidden="true">
@@ -66,7 +66,7 @@ export default {
             signUpForm: {
                 username: '',
                 password: '',
-                email: '',
+                // email: '',
             },
             showPassword: false,
         }

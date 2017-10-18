@@ -23,7 +23,7 @@ export default {
         var user = new AV.User();
         user.setUsername(username);
         user.setPassword(password);
-        user.setEmail(email);
+        // user.setEmail(email);
         user.signUp().then(function (user) {
             commit('LOGIN', user.toJSON())
         }).catch((error) => {
