@@ -18,19 +18,19 @@
 export default {
     data() {
         return {
-            
+
         }
     },
     methods: {
-        selectNav: function(choice) {
-            this.$store.commit('SET_TODONAV_SELECTOR', choice) 
-         },
+        selectNav: function (choice) {
+            this.$store.commit('SET_TODONAV_SELECTOR', choice)
+        },
     },
     computed: {
-        navSelector: function(){
+        navSelector: function () {
             return this.$store.state.navSelector
         },
-        left: function(){
+        left: function () {
             return this.$store.getters.leftTodosCount
         }
     },
@@ -39,59 +39,59 @@ export default {
 
 <style lang="scss" >
 .task-bar {
-    border-bottom: 1px solid #d1dbe5;
-    background-color: #eef1f6;
-    .task-bar-wrapper {
-        display: flex;
-        justify-content: space-between;
-        font-size: 16px;
-        overflow: hidden;
-        margin-bottom: -1px;
+  border-bottom: 1px solid #d1dbe5;
+  background-color: #eef1f6;
+  .task-bar-wrapper {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    overflow: hidden;
+    margin-bottom: -1px;
+    position: relative;
+    -webkit-font-smoothing: antialiased;
+    margin-bottom: -1px;
+    .task-bar-btns {
+      .btn {
+        display: inline-block;
+        transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+        border: 1px solid transparent;
+        border-top: 0;
+        margin-right: -1px;
+        margin-left: -1px;
+        padding: 0 16px;
+        height: 42px;
+        box-sizing: border-box;
+        line-height: 42px;
+        display: inline-block;
+        list-style: none;
+        font-size: 14px;
+        color: #8391a5;
         position: relative;
-        -webkit-font-smoothing: antialiased;
-        margin-bottom: -1px;
-        .task-bar-btns {
-            .btn {
-                display: inline-block;
-                transition: all .3s cubic-bezier(.645, .045, .355, 1);
-                border: 1px solid transparent;
-                border-top: 0;
-                margin-right: -1px;
-                margin-left: -1px;
-                padding: 0 16px;
-                height: 42px;
-                box-sizing: border-box;
-                line-height: 42px;
-                display: inline-block;
-                list-style: none;
-                font-size: 14px;
-                color: #8391a5;
-                position: relative;
-                cursor: pointer;
-                &.active {
-                    background-color: #fff;
-                    border-right-color: #d1dbe5;
-                    border-left-color: #d1dbe5;
-                    color: #24BABC;
-                }
-                @media screen and (max-width: 375px) {
-                    padding:0 10px;
-                }
-            }
-            &.completed{
-                .cp{
-                    color:#E85B48;
-                }
-            }
+        cursor: pointer;
+        &.active {
+          background-color: #fff;
+          border-right-color: #d1dbe5;
+          border-left-color: #d1dbe5;
+          color: #24babc;
         }
-        .task-state {
-            padding: 12px;
-            color: #8391a5;
-            font-weight: 700;
-            span {
-                font-weight: 400;
-            }
+        @media screen and (max-width: 375px) {
+          padding: 0 10px;
         }
+      }
+      &.completed {
+        .cp {
+          color: #e85b48;
+        }
+      }
     }
+    .task-state {
+      padding: 12px;
+      color: #8391a5;
+      font-weight: 700;
+      span {
+        font-weight: 400;
+      }
+    }
+  }
 }
 </style>
