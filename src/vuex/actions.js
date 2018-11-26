@@ -12,7 +12,7 @@ const errorAlert = error => {
 export default {
     // user control
     login({ dispatch, commit, state }, { username, password, cb }) {
-        AV.User.logIn(username, username).then((user) => {
+        AV.User.logIn(username, password).then((user) => {
             commit('LOGIN', user.toJSON())
         }).catch((error) => {
             let msg = getErrorMessage(error.code)
